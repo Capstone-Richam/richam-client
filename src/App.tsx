@@ -1,13 +1,13 @@
-import Router from './router/router';
-import {GlobalStyle} from './style/global';
+import Router from "./router/router";
+import { GlobalStyle } from "./style/global";
 
 function App() {
-	return (
-		<>
-			<GlobalStyle />
-			<Router />
-		</>
-	);
+  return (
+    <>
+      <GlobalStyle />
+      <Router />
+    </>
+  );
 }
 
 export default App;
