@@ -1,32 +1,71 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useState } from "react";
 
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
+import { postValidationEmail } from "@/api/login";
 import google from "@/assets/google.svg";
 import naver from "@/assets/naver.svg";
-import { ModalState, googleBtnState, naverBtnState } from "@/recoil/atom";
+import { ModalState, ToastState, googleBtnState, naverBtnState } from "@/recoil/atom";
 
 import { LoginButton } from "../Button";
 import Input from "../Input";
+import { Toast } from "../Toast";
 
 import { CloseButtonStyle, Container, InputBox, ModalWrapper } from "./style";
-const EmailModal = ({ email }: { email: string }) => {
-  const [googleId, setGoogleId] = useState<string>("");
-  const [googlePw, setGooglePw] = useState<string>("");
-  const [naverId, setNaverId] = useState<string>("");
-  const [naverPw, setNaverPw] = useState<string>("");
+const EmailModal = ({
+  email,
+  Id,
+  setId,
+  Pw,
+  setPw,
+}: {
+  email: string;
+  Id: string;
+  Pw: string;
+  setId: (id: string) => void;
+  setPw: (id: string) => void;
+}) => {
   const setModal = useSetRecoilState(ModalState);
   const setGoogleBtn = useSetRecoilState(googleBtnState);
   const setNaverBtn = useSetRecoilState(naverBtnState);
+  const [toast, setToast] = useRecoilState(ToastState);
+  const [text, setText] = useState<string>("");
+  const handleOnKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      EmailRegistration(email);
+    }
+  };
 
   const EmailRegistration = (email: string) => {
-    if (email === "naver") {
-      setNaverBtn(true);
-    } else if (email === "google") {
-      setGoogleBtn(true);
-    }
-    setModal("");
-    document.body.style.overflowY = "auto";
+    postValidationEmail({ Id, Pw })
+      .then((res) => {
+        console.log(res);
+        if (email === "naver") {
+          setNaverBtn(true);
+        } else if (email === "google") {
+          setGoogleBtn(true);
+        }
+        setModal("");
+        document.body.style.overflowY = "auto";
+      })
+      .catch((err) => {
+        if (err.response.status === 409) {
+          setText("IMAP 설정을 진행해주세요.");
+        } else if (err.response.status === 410) {
+          setText("아이디와 패스워드를 다시 입력해주세요.");
+        }
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 1500);
+
+        // 이메일 번호 틀렸을 때도 에러처리하기
+      });
+
+    //성공했을 때 이 로직 써야함!
+
+    // setModal("");
+    // document.body.style.overflowY = "auto";
   };
   const CloseModal = () => {
     setModal("");
@@ -35,53 +74,37 @@ const EmailModal = ({ email }: { email: string }) => {
   return (
     <ModalWrapper>
       <Container $email={email}>
+        {toast && <Toast message={text} />}
         <CloseButtonStyle onClick={CloseModal}>X</CloseButtonStyle>
-        {email === "naver" ? (
-          <>
-            <img
-              src={naver}
-              alt="네이버"
-              width={200}
-            />
-            <InputBox>
-              <Input
-                type="text"
-                value={naverId}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setNaverId(e.target.value)}
-                placeholder="네이버 이메일 아이디를 입력해주세요."
-              />
-              <Input
-                type="password"
-                value={naverPw}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setNaverPw(e.target.value)}
-                placeholder="네이버 이메일 비밀번호를 입력해주세요."
-              />
-            </InputBox>
-          </>
-        ) : (
-          <>
-            <img
-              src={google}
-              alt="구글"
-              width={200}
-            />
-            <InputBox>
-              <Input
-                type="text"
-                value={googleId}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setGoogleId(e.target.value)}
-                placeholder="구글 이메일 아이디를 입력해주세요."
-              />
-              <Input
-                type="password"
-                value={googlePw}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setGooglePw(e.target.value)}
-                placeholder="구글 이메일 비밀번호를 입력해주세요."
-              />
-            </InputBox>
-          </>
-        )}
 
+        <img
+          src={email === "naver" ? naver : google}
+          alt="네이버"
+          width={200}
+        />
+        <InputBox>
+          <Input
+            type="text"
+            value={Id}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setId(e.target.value)}
+            placeholder={
+              email === "naver"
+                ? "네이버 이메일 아이디를 입력해주세요."
+                : "구글 이메일 아이디를 입력해주세요."
+            }
+          />
+          <Input
+            type="password"
+            value={Pw}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setPw(e.target.value)}
+            placeholder={
+              email === "naver"
+                ? "네이버 이메일 비밀번호를 입력해주세요."
+                : "구글 이메일 비밀번호를 입력해주세요."
+            }
+            onKeyDown={handleOnKeyPress}
+          />
+        </InputBox>
         <LoginButton onClick={() => EmailRegistration(email)}>이메일 등록</LoginButton>
         <p>*각 메일 서버에서 imap 설정을 승인해주세요.</p>
         <p
