@@ -3,6 +3,7 @@ import { ChangeEvent, useState, KeyboardEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+import { postLogin } from "@/api/login";
 import { LoginButton } from "@/components/Button";
 import Input from "@/components/Input";
 import Logo from "@/components/Logo";
@@ -19,6 +20,7 @@ const LoginPage = () => {
   };
 
   const Login = () => {
+    postLogin({ id, pw }).then((res) => console.log(res));
     //로그인 api
   };
 
