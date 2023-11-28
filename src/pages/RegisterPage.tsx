@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 
+import { postRegister } from "@/api/login";
 import EmailModal from "@/components/EmailModal";
 import Input from "@/components/Input";
 import Logo from "@/components/Logo";
@@ -15,6 +16,10 @@ const RegisterPage = () => {
   const [password1, setPassword1] = useState<string>("");
   const [password2, setPassword2] = useState<string>("");
   const [name, setName] = useState<string>("");
+  const [googleId, setGoogleId] = useState<string>("");
+  const [googlePw, setGooglePw] = useState<string>("");
+  const [naverId, setNaverId] = useState<string>("");
+  const [naverPw, setNaverPw] = useState<string>("");
   const [registerFlag, setRegisterFlag] = useState<boolean>(true);
 
   const [userIdNum, setUserIdNum] = useState<number>(0);
@@ -112,9 +117,18 @@ const RegisterPage = () => {
     document.body.style.overflowY = "hidden";
   };
 
+  const OkRegister = () => {
+    postRegister({ userId, password2, name, naverId, naverPw, googleId, googlePw })
+      .then((res) => {
+        console.log(res);
+        navigate("/");
+      }) // 홈으로 라우팅
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     if (
-      duplicate &&
+      //duplicate &&
       userId &&
       password1Error &&
       password1 &&
@@ -143,9 +157,21 @@ const RegisterPage = () => {
   return (
     <>
       {modal === "naver" ? (
-        <EmailModal email="naver" />
+        <EmailModal
+          email="naver"
+          Id={naverId}
+          setId={setNaverId}
+          Pw={naverPw}
+          setPw={setNaverPw}
+        />
       ) : modal === "google" ? (
-        <EmailModal email="google" />
+        <EmailModal
+          email="google"
+          Id={googleId}
+          setId={setGoogleId}
+          Pw={googlePw}
+          setPw={setGooglePw}
+        />
       ) : (
         ""
       )}
@@ -248,12 +274,14 @@ const RegisterPage = () => {
             <p className="title">소셜 이메일 등록</p>
             <div className="Btns">
               <GoogleEmailCheckBtn
+                disabled={googleBtn}
                 googleBtn={googleBtn}
                 onClick={() => OpenModal("google")}
               >
                 구글
               </GoogleEmailCheckBtn>
               <NaverEmailCheckBtn
+                disabled={naverBtn}
                 naverBtn={naverBtn}
                 onClick={() => OpenModal("naver")}
               >
@@ -263,7 +291,7 @@ const RegisterPage = () => {
           </EmailBox>
           <RegisterButton
             disabled={registerFlag}
-            onClick={() => navigate("/")}
+            onClick={OkRegister}
           >
             회원가입 완료
           </RegisterButton>
@@ -383,7 +411,7 @@ export const EmailBox = styled.div`
   }
 `;
 
-export const GoogleEmailCheckBtn = styled.div<{ googleBtn: boolean }>`
+export const GoogleEmailCheckBtn = styled.button<{ googleBtn: boolean }>`
   color: ${(props) => (props.googleBtn ? "var(--Main_Blue, #0084FF)" : "var(--Gray6_500)")};
   background-color: ${(props) =>
     props.googleBtn ? "var(--blue, #eaf5ff)" : "var(--Gray1_50, #fafafa)"};
@@ -400,7 +428,7 @@ export const GoogleEmailCheckBtn = styled.div<{ googleBtn: boolean }>`
   justify-content: center;
   align-items: center;
 `;
-export const NaverEmailCheckBtn = styled.div<{ naverBtn: boolean }>`
+export const NaverEmailCheckBtn = styled.button<{ naverBtn: boolean }>`
   color: ${(props) => (props.naverBtn ? "var(--Main_Blue, #0084FF)" : "var(--Gray6_500)")};
   background-color: ${(props) =>
     props.naverBtn ? "var(--blue, #eaf5ff)" : "var(--Gray1_50, #fafafa)"};
