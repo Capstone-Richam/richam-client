@@ -22,13 +22,13 @@
     "arrow-body-style": "off",
     "prefer-arrow-callback": "off",
     "indent": "off",
-    
 
     //"quotes": ["error", "single"]
     //"semi": ["error", "never"],
     "@typescript-eslint/no-empty-function": ["error", { "allow": ["arrowFunctions"] }],
+    "@typescript-eslint/no-unused-vars": "warn",
     "import/order": [
-      "error",
+      "warn",
       {
         "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
         "pathGroups": [
