@@ -14,3 +14,8 @@ export const naverBtnState = atom({
   key: "naverBtnState",
   default: false,
 });
+
+export const ToastState = atom({
+  key: "ToastState",
+  default: false,
+});
