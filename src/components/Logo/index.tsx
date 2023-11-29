@@ -1,0 +1,31 @@
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
+import logo from "@/assets/richamLogo.svg";
+const Logo = () => {
+  const urlSplit = document.location.href.split("/")[3];
+  const navigate = useNavigate();
+  return (
+    <Container $url={urlSplit}>
+      <img
+        src={logo}
+        alt="richam"
+        height={30}
+        onClick={() => navigate("/")}
+      />
+    </Container>
+  );
+};
+
+export default Logo;
+
+const Container = styled.div<{ $url: string }>`
+  display: flex;
+  justify-content: center;
+  img {
+    cursor: pointer;
+    margin-top: ${(props) => (props.$url === "register" ? "50px" : "130px")};
+    height: 40px;
+    width: 370px;
+  }
+`;
