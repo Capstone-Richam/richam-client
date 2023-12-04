@@ -53,7 +53,10 @@ const EmailModal = ({
           setText("IMAP 설정을 진행해주세요.");
         } else if (err.response.status === 410) {
           setText("아이디와 패스워드를 다시 입력해주세요.");
+        } else {
+          setText(`서버에러 입니다. 에러코드 : ${err}`);
         }
+
         setToast(true);
         setTimeout(() => {
           setToast(false);
