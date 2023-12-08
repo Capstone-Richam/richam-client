@@ -16,6 +16,7 @@ const App = () => {
           queries: {
             refetchOnReconnect: false,
             refetchOnWindowFocus: false,
+            throwOnError: true,
           },
         },
       })
