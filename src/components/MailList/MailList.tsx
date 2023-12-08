@@ -20,15 +20,9 @@ const MailList = ({ type }: MailListProps) => {
 
   useEffect(() => {
     if (!targetRef.current) return;
-    observerRef.current = new IntersectionObserver(
-      (entries: IntersectionObserverEntry[]) => {
-        if (entries[0].isIntersecting && hasNextPage) fetchNextMailList();
-      },
-      {
-        rootMargin: "0px",
-        threshold: 0,
-      }
-    );
+    observerRef.current = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
+      if (entries[0].isIntersecting && hasNextPage) fetchNextMailList();
+    });
     observerRef.current.observe(targetRef.current);
 
     return () => {
