@@ -5,9 +5,8 @@ import { useRecoilValue } from "recoil";
 
 import plus from "@/assets/plus.svg";
 import Keyword from "@/components/Keyword";
-import MailList from "@/components/MailList";
 import { keyWordArrayState } from "@/recoil/atom/keyword";
-        
+
 import * as styles from "./KeywordFilteredMailPage.style";
 
 const KeywordFilteredMailPage = () => {
