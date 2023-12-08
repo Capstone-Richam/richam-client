@@ -4,8 +4,9 @@ import MailList from "@/components/MailList";
 import { MailFilterAtom } from "@/recoil/atom/mail";
 import { MailFilterType } from "@/types";
 
+import { maillistDummyData } from "../../dummy";
+
 import * as styles from "./MainPage.style";
-import { maillistDummyData } from "./dummy";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const INFO: Record<any, { title: string; description: string }> = {
