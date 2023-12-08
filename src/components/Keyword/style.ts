@@ -9,6 +9,10 @@ export const Container = styled.div<{ $state: boolean }>`
   padding: 10px 20px;
   margin: 10px 8px;
   text-align: center;
+  cursor: ${(props) => !props.$state && "pointer"};
+  &:hover {
+    opacity: ${(props) => !props.$state && ".5"};
+  }
   img {
     margin-left: ${(props) => props.$state && "5px"};
     cursor: pointer;
