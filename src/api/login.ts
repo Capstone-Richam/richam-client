@@ -1,7 +1,7 @@
 import { RICHAM } from ".";
 
 export const postLogin = async ({ id, pw }: { id: string; pw: string }) => {
-  const res = await RICHAM.post("/user/signin", {
+  const res = await RICHAM.post("/member/signin", {
     account: id,
     password: pw,
   });
@@ -25,7 +25,7 @@ export const postRegister = async ({
   googleId: string;
   googlePw: string;
 }) => {
-  const res = await RICHAM.post("/user/signup", {
+  const res = await RICHAM.post("/member/signup", {
     account: userId,
     password: password2,
     name: name,
@@ -41,6 +41,14 @@ export const postValidationEmail = async ({ Id, Pw }: { Id: string; Pw: string }
   const res = await RICHAM.post("/mail/validate", {
     id: Id,
     password: Pw,
+  });
+  return res;
+};
+
+export const getDuplicate = async ({ aorn, content }: { aorn: string; content: string }) => {
+  const res = await RICHAM.post("/member/validate", {
+    aorn: aorn,
+    content: content,
   });
   return res;
 };
