@@ -1,7 +1,8 @@
-import React, { ChangeEvent, KeyboardEvent, useState } from "react";
+import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
 
 import { useRecoilState } from "recoil";
 
+import { getKeywords, patchKeyword } from "@/api/keyword";
 import plus from "@/assets/plus.svg";
 import Input from "@/components/Input";
 import Keyword from "@/components/Keyword";
@@ -31,9 +32,26 @@ const KeywordRegisterPage = () => {
   };
 
   const AddKeyword = () => {
-    setKeywordArray([...keywordArray, keyword]);
-    setKeyword(""); //서버 퉁신
+    patchKeyword(keyword).then(() => {
+      setKeywordArray([...keywordArray, keyword]);
+      setKeyword(""); //서버 퉁신
+    });
   };
+  const AddBtnKeyword = (item: string) => {
+    patchKeyword(item)
+      .then(() => {
+        setKeywordArray([...keywordArray, item]);
+        setKeyword("");
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getKeywords()
+      .then((res) => {
+        setKeywordArray(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  }, [setKeywordArray]);
   return (
     <styles.Container>
       <styles.Title>관심 키워드 등록</styles.Title>
@@ -82,6 +100,7 @@ const KeywordRegisterPage = () => {
                 <Keyword
                   keyword={item}
                   state={false}
+                  onClick={() => AddBtnKeyword(item)}
                 />
               </React.Fragment>
             ))}
