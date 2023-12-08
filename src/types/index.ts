@@ -10,6 +10,7 @@ export interface InputProps {
   onFocus?: (e: FocusEvent<HTMLInputElement>) => void;
   errorLine?: boolean;
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
+  name?: string;
 }
 
 export interface ButtonProps {
