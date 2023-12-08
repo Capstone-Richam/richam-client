@@ -24,7 +24,7 @@ const Mail = ({ id, type, fromPerson, title, date }: MailProps) => {
       <img src={type === "GOOGLE" ? GoogleLogo : NaverLogo} />
       <styles.Text className="from">{fromPerson}</styles.Text>
       <styles.Text className="title">{title}</styles.Text>
-      <styles.Text className="date">{date ?? ""}</styles.Text>
+      <styles.Text className="date">{date.toString()}</styles.Text>
     </styles.MailWrapper>
   );
 };

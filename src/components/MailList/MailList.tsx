@@ -13,16 +13,19 @@ export interface MailListProps {
 
 const MailList = ({ type }: MailListProps) => {
   const { data, fetchNextPage: fetchNextMailList, hasNextPage } = useGetInfiniteMailList({ type });
-  const mails = data?.pages.flatMap((page) => page.content) || [];
+  const mails = data?.pages.flatMap((page) => page.content) ?? [];
 
   const observerRef = useRef<IntersectionObserver | null>(null);
-  const targetRef = useRef<Element | null>(null);
+  const targetRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!targetRef.current) return;
-    observerRef.current = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
-      if (entries[0].isIntersecting && hasNextPage) fetchNextMailList();
-    });
+    observerRef.current = new IntersectionObserver(
+      (entries: IntersectionObserverEntry[]) => {
+        if (entries[0].isIntersecting && hasNextPage) fetchNextMailList();
+      },
+      { threshold: 0 }
+    );
     observerRef.current.observe(targetRef.current);
 
     return () => {
@@ -34,11 +37,7 @@ const MailList = ({ type }: MailListProps) => {
   }, [targetRef, fetchNextMailList, hasNextPage]);
 
   return (
-    <styles.ListWrapper
-      ref={(element: HTMLDivElement) => {
-        if (element?.lastElementChild) targetRef.current = element.lastElementChild;
-      }}
-    >
+    <styles.ListWrapper>
       {mails.map((mail) => (
         <Mail
           key={mail.mailId}
@@ -49,6 +48,7 @@ const MailList = ({ type }: MailListProps) => {
           date={mail.date}
         />
       ))}
+      <styles.Box ref={targetRef} />
     </styles.ListWrapper>
   );
 };

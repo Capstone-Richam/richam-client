@@ -7,7 +7,7 @@ export const useGetInfiniteMailList = ({ type }: { type: "ALL" | "GOOGLE" | "NAV
   useInfiniteQuery({
     queryKey: ["mail-list", type],
     queryFn: ({ pageParam }) => getMailListAysnc({ type, page: pageParam?.page }),
-    initialPageParam: { page: 1 },
+    initialPageParam: { page: 0 },
     getNextPageParam: (lastPage) => {
       if (lastPage.hasNextPage) {
         return {
