@@ -4,6 +4,7 @@ export const RICHAM = axios.create({
   baseURL: "https://dev.richam.site/api",
   headers: {
     "Content-Type": "application/json;charset=UTF-8",
+    Authorization: `Bearer ${localStorage.accessToken}`,
   },
   responseType: "json",
 });

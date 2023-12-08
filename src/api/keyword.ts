@@ -1,40 +1,16 @@
-import axios from "axios";
-
-const richamAxios = axios.create({
-  baseURL: "https://dev.richam.site/",
-});
+import { RICHAM } from ".";
 
 export const getKeywords = async () => {
-  const res = await richamAxios.get("/api/keyword", {
-    headers: {
-      Authorization: `Bearer ${localStorage.accessToken}`,
-    },
-  });
+  const res = await RICHAM.get("/api/keyword");
   return res;
 };
 
 export const patchKeyword = async (keyword: string) => {
-  const res = await richamAxios.patch(
-    "/api/keyword",
-    { words: [keyword] },
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.accessToken}`,
-      },
-    }
-  );
+  const res = await RICHAM.patch("/api/keyword", { words: [keyword] });
   return res;
 };
 
 export const deleteKeyword = async (keyword: string) => {
-  const res = await richamAxios.post(
-    "/api/keyword",
-    { words: [keyword] },
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.accessToken}`,
-      },
-    }
-  );
+  const res = await RICHAM.post("/api/keyword", { words: [keyword] });
   return res;
 };
