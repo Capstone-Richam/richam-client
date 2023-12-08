@@ -1,5 +1,3 @@
-import { useRecoilValue } from "recoil";
-
 import MailList from "@/components/MailList";
 import { maillistDummyData } from "@/dummy";
 
