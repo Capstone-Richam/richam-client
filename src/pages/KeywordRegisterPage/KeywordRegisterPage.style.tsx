@@ -63,7 +63,6 @@ export const ReigsterKeywordTitle = styled.div`
 
 export const ReigsterKeywordBox = styled.div`
   width: 70%;
-  height: 150px;
   display: flex;
   border: 2px solid #fff;
   margin: 0 auto;
@@ -74,6 +73,7 @@ export const ReigsterKeywordInnerBox = styled.div`
   margin: 25px;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 `;
 
 export const RecommendKeywordWrapper = styled.div`
