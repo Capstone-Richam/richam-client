@@ -3,6 +3,7 @@ import { ChangeEvent, KeyboardEvent, useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 
 import { postValidationEmail } from "@/api/login";
+import Xicon from "@/assets/Xicon.svg";
 import google from "@/assets/google.svg";
 import naver from "@/assets/naver.svg";
 import { ModalState, ToastState, googleBtnState, naverBtnState } from "@/recoil/atom";
@@ -78,7 +79,12 @@ const EmailModal = ({
     <ModalWrapper>
       <Container $email={email}>
         {toast && <Toast message={text} />}
-        <CloseButtonStyle onClick={CloseModal}>X</CloseButtonStyle>
+        <CloseButtonStyle onClick={CloseModal}>
+          <img
+            src={Xicon}
+            alt="X"
+          />
+        </CloseButtonStyle>
 
         <img
           src={email === "naver" ? naver : google}

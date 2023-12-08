@@ -33,7 +33,7 @@ const routes = [
     path: "/login",
     element: <LoginPage />,
   },
-  { path: "/regsiter", element: <RegisterPage /> },
+  { path: "/register", element: <RegisterPage /> },
 ];
 
 export default routes;
