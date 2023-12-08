@@ -10,6 +10,7 @@ export const Input = ({
   onFocus,
   errorLine,
   onKeyDown,
+  name,
 }: InputProps) => {
   return (
     <div>
@@ -21,6 +22,7 @@ export const Input = ({
         onFocus={onFocus}
         errorLine={errorLine}
         onKeyDown={onKeyDown}
+        name={name}
       />
     </div>
   );

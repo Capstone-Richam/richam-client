@@ -8,11 +8,34 @@ export const Container = styled.div`
 export const Title = styled.div`
   font-size: 42px;
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: 22px;
 `;
 
 export const Description = styled.div`
   font-size: 16px;
   font-weight: 300;
-  margin-bottom: 40px;
+`;
+
+export const KeywordWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0 30px;
+`;
+
+export const KeywordBox = styled.div`
+  display: flex;
+`;
+
+export const KeywordBtn = styled.button`
+  border: none;
+  color: #fff;
+  background-color: #464646;
+  width: 150px;
+  padding: 10px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
 `;

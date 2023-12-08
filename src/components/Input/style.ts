@@ -6,7 +6,10 @@ export const BasicInput = styled.input<InputProps>`
   box-sizing: border-box;
   width: 100%;
   /* width: 370px; */
-  height: 56px;
+  height: ${(props) => (props.name === "keyword" ? "40px" : "56px")};
+  background-color: ${(props) =>
+    props.name === "keyword" ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,1)"};
+
   border-radius: 5px;
   border: 1px solid var(--Gray4_300, #d9d9d9);
   outline: none;
@@ -40,12 +43,12 @@ export const BasicInput = styled.input<InputProps>`
   font-weight: 500;
 
   &::placeholder {
-    color: var(--Gray7_600, #757575);
     font-size: 1rem;
     font-style: normal;
     font-weight: 500;
     line-height: 24px; /* 150% */
     letter-spacing: -0.24px;
+    color: ${(props) => (props.name === "keyword" ? "#212121" : "var(--Gray7_600, #757575);")};
   }
 
   &:focus {
