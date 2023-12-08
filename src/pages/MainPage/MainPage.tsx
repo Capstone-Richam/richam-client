@@ -1,7 +1,6 @@
 import { useRecoilValue } from "recoil";
 
 import MailList from "@/components/MailList";
-import Mail from "@/components/MailList/Mail";
 import { MailFilterAtom } from "@/recoil/atom/mail";
 import { MailFilterType } from "@/types";
 
