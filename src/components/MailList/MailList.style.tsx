@@ -14,6 +14,7 @@ export const MailWrapper = styled.div`
 
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   .from {
     left: 5%;
