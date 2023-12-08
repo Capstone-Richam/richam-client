@@ -5,16 +5,36 @@ const richamAxios = axios.create({
 });
 
 export const getKeywords = async () => {
-  const res = await richamAxios.get("/api/keyword/11");
+  const res = await richamAxios.get("/api/keyword", {
+    headers: {
+      Authorization: `Bearer ${localStorage.accessToken}`,
+    },
+  });
   return res;
 };
 
 export const patchKeyword = async (keyword: string) => {
-  const res = await richamAxios.patch("/api/keyword", { memberId: 11, words: [keyword] });
+  const res = await richamAxios.patch(
+    "/api/keyword",
+    { words: [keyword] },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.accessToken}`,
+      },
+    }
+  );
   return res;
 };
 
 export const deleteKeyword = async (keyword: string) => {
-  const res = await richamAxios.post("/api/keyword", { memberId: 11, words: [keyword] });
+  const res = await richamAxios.post(
+    "/api/keyword",
+    { words: [keyword] },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.accessToken}`,
+      },
+    }
+  );
   return res;
 };
