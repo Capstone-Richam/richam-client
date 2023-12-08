@@ -4,11 +4,15 @@ export const Wrapper = styled.div`
   position: relative;
   background: #202020;
   color: #fff;
-  display: flex;
-  align-items: flex-start;
+
+  padding-left: 15%;
 `;
 
 export const BarWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+
   width: 15%;
   min-width: 170px;
   height: 100%;

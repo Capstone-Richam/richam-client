@@ -1,11 +1,7 @@
-import axios from "axios";
-
-const richamAxios = axios.create({
-  baseURL: "https://dev.richam.site/",
-});
+import { RICHAM } from ".";
 
 export const postLogin = async ({ id, pw }: { id: string; pw: string }) => {
-  const res = await richamAxios.post("/api/user/signin", {
+  const res = await RICHAM.post("/user/signin", {
     account: id,
     password: pw,
   });
@@ -29,7 +25,7 @@ export const postRegister = async ({
   googleId: string;
   googlePw: string;
 }) => {
-  const res = await richamAxios.post("/api/user/signup", {
+  const res = await RICHAM.post("/user/signup", {
     account: userId,
     password: password2,
     name: name,
@@ -42,7 +38,7 @@ export const postRegister = async ({
 };
 
 export const postValidationEmail = async ({ Id, Pw }: { Id: string; Pw: string }) => {
-  const res = await richamAxios.post("/api/mail/validate", {
+  const res = await RICHAM.post("/mail/validate", {
     id: Id,
     password: Pw,
   });

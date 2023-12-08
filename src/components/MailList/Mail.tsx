@@ -9,10 +9,10 @@ import * as styles from "./MailList.style";
 
 export interface MailProps {
   id: number;
-  type: "naver" | "google";
+  type: "NAVER" | "GOOGLE" | "ALL";
   fromPerson: string;
   title: string;
-  date: string;
+  date: Date;
 }
 
 const Mail = ({ id, type, fromPerson, title, date }: MailProps) => {
@@ -20,10 +20,10 @@ const Mail = ({ id, type, fromPerson, title, date }: MailProps) => {
 
   return (
     <styles.MailWrapper onClick={() => navigate(`/${id}`)}>
-      <img src={type === "google" ? GoogleLogo : NaverLogo} />
+      <img src={type === "GOOGLE" ? GoogleLogo : NaverLogo} />
       <styles.Text className="from">{fromPerson}</styles.Text>
       <styles.Text className="title">{title}</styles.Text>
-      <styles.Text className="date">{date}</styles.Text>
+      <styles.Text className="date">{date.toString()}</styles.Text>
     </styles.MailWrapper>
   );
 };

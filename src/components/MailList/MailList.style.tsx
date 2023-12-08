@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const ListWrapper = styled.div`
   width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 `;
@@ -41,4 +42,9 @@ export const LogoWrapper = styled.div`
 export const Text = styled.div`
   position: absolute;
   top: 25px;
+`;
+
+export const Box = styled.div`
+  width: 100%;
+  height: 30px;
 `;
