@@ -28,7 +28,6 @@ export const CloseButtonStyle = styled.div`
   align-items: center;
   cursor: pointer;
   font-size: 30px;
-  padding-top: 6px;
 `;
 export const Container = styled.div<{ $email: string }>`
   position: relative;
@@ -42,7 +41,7 @@ export const Container = styled.div<{ $email: string }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  img {
+  img[alt="네이버"] {
     margin-top: ${(props) => (props.$email === "naver" ? "50px" : "30px")};
   }
   p {
