@@ -1,15 +1,26 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useEffect } from "react";
 
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 import * as styles from "./Layout.style";
 import SideNavBar from "./SideNavBar";
 
-const Layout = ({ children }: PropsWithChildren) => (
-  <styles.Wrapper>
-    <SideNavBar />
-    {children || <Outlet />}
-  </styles.Wrapper>
-);
+const Layout = ({ children }: PropsWithChildren) => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("accessToken")) {
+      navigate("/login");
+    } else {
+      navigate("/");
+    }
+  }, [navigate]);
+
+  return (
+    <styles.Wrapper>
+      <SideNavBar />
+      {children || <Outlet />}
+    </styles.Wrapper>
+  );
+};
 
 export default Layout;

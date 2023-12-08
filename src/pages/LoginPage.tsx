@@ -1,17 +1,21 @@
 import { ChangeEvent, useState, KeyboardEvent } from "react";
 
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 import { postLogin } from "@/api/login";
 import { LoginButton } from "@/components/Button";
 import Input from "@/components/Input";
 import Logo from "@/components/Logo";
+import { Toast } from "@/components/Toast";
+import { ToastState } from "@/recoil/atom";
 
 const LoginPage = () => {
   const [id, setId] = useState("");
   const [pw, setPw] = useState<string>("");
   const navigate = useNavigate();
+  const [toast, setToast] = useRecoilState(ToastState);
 
   const handleOnKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -20,7 +24,19 @@ const LoginPage = () => {
   };
 
   const Login = () => {
-    postLogin({ id, pw }).then((res) => console.log(res));
+    postLogin({ id, pw })
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem("accessToken", res.data.data.accessToken);
+        localStorage.setItem("refreshToken", res.data.data.refreshToken);
+        navigate("/");
+      })
+      .catch(() => {
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 1500);
+      });
     //로그인 api
   };
 
@@ -30,6 +46,7 @@ const LoginPage = () => {
 
   return (
     <Container>
+      {toast && <Toast message="아이디 또는 비밀번호를 다시 입력해주세요." />}
       <Logo />
       <InputBox>
         <Input

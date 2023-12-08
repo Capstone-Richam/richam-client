@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 
-import { postRegister } from "@/api/login";
+import { getDuplicate, postRegister } from "@/api/login";
 import EmailModal from "@/components/EmailModal";
 import Input from "@/components/Input";
 import Logo from "@/components/Logo";
@@ -32,6 +32,9 @@ const RegisterPage = () => {
   const [password2Show, setPassword2Show] = useState<boolean>(false);
   const [errorIdLine, setErrorIdLine] = useState<boolean>(false);
   const [focus, setFocus] = useState<boolean>(false);
+  const [duplicateShowNickname, setDuplicateShowNickname] = useState<boolean>(false);
+  const [duplicateNickname, setDuplicateNickname] = useState<boolean>(false);
+  const [errorNicknameLine, setErrorNicknameLine] = useState<boolean>(false);
 
   const [modal, setModal] = useRecoilState(ModalState);
   const googleBtn = useRecoilValue(googleBtnState);
@@ -41,7 +44,7 @@ const RegisterPage = () => {
     const value = e.target.value;
     setDuplicateShow(false);
     setErrorIdLine(false);
-    if (value.length < 11) {
+    if (value.length < 16) {
       setUserIdNum(value.length);
       setUserId(value);
     }
@@ -84,6 +87,8 @@ const RegisterPage = () => {
 
   const handleNicknameChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+    setDuplicateShowNickname(false); // 일단 버튼을 누르면 hide 클래스 제거
+    setErrorNicknameLine(false);
     if (value.length < 11) {
       setName(value);
     }
@@ -94,19 +99,44 @@ const RegisterPage = () => {
     setDuplicateShow(true); // 일단 버튼을 누르면 hide 클래스 제거
     setErrorIdLine(true);
 
-    // getDuplicateId(userId)
-    //   .then((res) => {
-    //     console.log(res);
-    //     if (!res.data.data.isChecked) {
-    //       setDuplicate(true);
-    //       setDuplicateShow(true); // 일단 버튼을 누르면 hide 클래스 제거
-    //     } else {
-    //       setDuplicate(false);
-    //       setDuplicateShow(true); // 일단 버튼을 누르면 hide 클래스 제거
-    //       setErrorIdLine(true); //에러 라인 전달
-    //     }
-    //   })
-    //   .catch((err) => console.log(err));
+    getDuplicate({ aorn: "account", content: userId })
+      .then((res) => {
+        console.log(res);
+        setDuplicate(true);
+        setDuplicateShow(true); // 일단 버튼을 누르면 hide 클래스 제거
+        // if (!res.data.data.isChecked) {
+        //   setDuplicate(true);
+        //   setDuplicateShow(true); // 일단 버튼을 누르면 hide 클래스 제거
+        // }
+        // else {
+        //   setDuplicate(false);
+        //   setDuplicateShow(true); // 일단 버튼을 누르면 hide 클래스 제거
+        //   setErrorIdLine(true); //에러 라인 전달
+        // }
+      })
+      .catch(() => {
+        setDuplicate(false);
+        setDuplicateShow(true); // 일단 버튼을 누르면 hide 클래스 제거
+        setErrorIdLine(true); //에러 라인 전달
+      });
+    // 로딩 후.
+    // api 요청해야함. 요청이 오면
+    // if 성공이 오면 듀플리케이트 값 true로 하고 show true
+  };
+
+  const DuplicateCheckNickname = () => {
+    getDuplicate({ aorn: "nickname", content: name })
+      .then((res) => {
+        console.log(res);
+        setDuplicateNickname(true);
+        setDuplicateShowNickname(true); // 일단 버튼을 누르면 hide 클래스 제거
+      })
+      .catch(() => {
+        setDuplicateNickname(false);
+        setDuplicateShowNickname(true); // 일단 버튼을 누르면 hide 클래스 제거
+        setErrorNicknameLine(true); //에러 라인 전달
+      });
+
     // 로딩 후.
     // api 요청해야함. 요청이 오면
     // if 성공이 오면 듀플리케이트 값 true로 하고 show true
@@ -120,9 +150,9 @@ const RegisterPage = () => {
   const OkRegister = () => {
     postRegister({ userId, password2, name, naverId, naverPw, googleId, googlePw })
       .then((res) => {
-        console.log(res);
-        navigate("/");
-      }) // 홈으로 라우팅
+        console.log(res); // 여기서 로컬스토리지 저장
+        navigate("/login");
+      }) // 로그인으로 라우팅
       .catch((err) => console.log(err));
   };
 
@@ -207,7 +237,7 @@ const RegisterPage = () => {
                   ""
                 )}
               </div>
-              <div>({userIdNum}/10)</div>
+              <div>({userIdNum}/15)</div>
             </div>
           </IdBox>
           <PasswordBox>
@@ -267,7 +297,28 @@ const RegisterPage = () => {
                 value={name}
                 onChange={handleNicknameChange}
                 placeholder="본인 이름을 입력해주세요."
+                errorLine={errorNicknameLine}
               />
+              <DuplicateBtn
+                //disabled={duplicateNickname} // 성공하면 바꿀 수 없게
+                className={duplicateShowNickname ? "title" : ""}
+                onClick={DuplicateCheckNickname}
+              >
+                중복확인
+              </DuplicateBtn>
+            </div>
+            <div className="parityCheck">
+              <div>
+                {duplicateShowNickname ? (
+                  duplicateNickname ? (
+                    <p className="success">사용 가능한 닉네임이에요.</p>
+                  ) : (
+                    <p className="error">사용할 수 없는 닉네임이에요.</p>
+                  )
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
           </NicknameBox>
           <EmailBox>
