@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ManipulateType } from "dayjs";
-import { ErrorBoundary } from "react-error-boundary";
 import { useRecoilValue } from "recoil";
 
+import ErrorBoundary from "@/components/ErrorBoundary";
 import MailList from "@/components/MailList";
 import { MailFilterAtom } from "@/recoil/atom/mail";
 import { MailFilterType } from "@/types";
@@ -22,15 +21,11 @@ const INFO: Record<any, { title: string; description: string }> = {
 const MainPage = () => {
   const mailFilter = useRecoilValue(MailFilterAtom);
 
-  const fallbackRender = ({ error, resetErrorBoundary }: any) => {
-    return <div>{error.message}</div>;
-  };
-
   return (
     <styles.Container>
       <styles.Title>{INFO[mailFilter].title} 메일</styles.Title>
       <styles.Description>{INFO[mailFilter].description}</styles.Description>
-      <ErrorBoundary fallbackRender={fallbackRender}>
+      <ErrorBoundary>
         <MailList type={mailFilter as Exclude<MailFilterType, "KEYWORD">} />
       </ErrorBoundary>
     </styles.Container>

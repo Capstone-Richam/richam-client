@@ -50,7 +50,7 @@ export async function getAsync<T>(url: string, config?: AxiosRequestConfig) {
     });
     return response.data;
   } catch (error) {
-    throw new Error("서비스에 문제가 발생했어요. 다시 시도해주세요!");
+    throw new Error();
   }
 }
 
@@ -61,6 +61,6 @@ export async function postAsync<T, D>(url: string, data: D, config?: AxiosReques
     });
     return response.data;
   } catch (error) {
-    throw new Error("서비스에 문제가 발생했어요. 다시 시도해주세요!");
+    throw new Error();
   }
 }

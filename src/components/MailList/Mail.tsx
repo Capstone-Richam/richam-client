@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 
 import GoogleLogo from "@/assets/google-circle-logo.svg";
