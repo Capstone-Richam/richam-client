@@ -18,3 +18,9 @@ export interface ButtonProps {
   onClick?: () => void;
   // 다른 버튼 관련 프로퍼티 추가
 }
+
+export interface KeyWordProps {
+  keyword: string;
+  state: boolean;
+  onClick?: () => void;
+}
