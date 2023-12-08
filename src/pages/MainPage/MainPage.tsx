@@ -1,14 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRecoilValue } from "recoil";
 
 import MailList from "@/components/MailList";
 import { MailFilterAtom } from "@/recoil/atom/mail";
 import { MailFilterType } from "@/types";
 
-import { maillistDummyData } from "../../dummy";
-
 import * as styles from "./MainPage.style";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const INFO: Record<any, { title: string; description: string }> = {
   all: {
     title: "전체",
@@ -20,13 +18,13 @@ const INFO: Record<any, { title: string; description: string }> = {
 };
 
 const MainPage = () => {
-  const mailFilter = useRecoilValue<MailFilterType>(MailFilterAtom);
+  const mailFilter = useRecoilValue(MailFilterAtom);
 
   return (
     <styles.Container>
       <styles.Title>{INFO[mailFilter].title} 메일</styles.Title>
       <styles.Description>{INFO[mailFilter].description}</styles.Description>
-      <MailList data={maillistDummyData} />
+      <MailList type={mailFilter as Exclude<MailFilterType, "KEYWORD">} />
     </styles.Container>
   );
 };
