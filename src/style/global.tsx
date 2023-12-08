@@ -1,11 +1,20 @@
-// 전역 스타일 내용 들어갈 예정
-
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
 
+@font-face {
+	font-family: 'Pretendard Variable';
+	font-weight: 100 800;
+	font-style: normal;
+	font-display: swap;
+	src: local('Pretendard Variable'), url('/PretendardVariable.woff2') format('woff2-variations');
+}
+
 * {
 	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	font-family: 'Pretendard Variable';
 }
 
 
@@ -26,9 +35,8 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font: inherit;
 	vertical-align: baseline;
-  position: relative;
+  	position: relative;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
