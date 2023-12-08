@@ -1,5 +1,7 @@
 import { ChangeEvent, FocusEvent, KeyboardEvent } from "react";
 
+export * from "./mail.ts";
+
 export interface InputProps {
   value: string;
   type: string;

@@ -1,13 +1,16 @@
-import Router from "./router/router";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
+import routes from "./router";
 import { GlobalStyle } from "./style/global";
 
-function App() {
+const App = () => {
+  const router = createBrowserRouter(routes);
   return (
     <>
       <GlobalStyle />
-      <Router />
+      <RouterProvider router={router} />
     </>
   );
-}
+};
 
 export default App;
