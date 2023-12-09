@@ -85,3 +85,15 @@ export const KeywordBtn = styled.button`
   gap: 10px;
   cursor: pointer;
 `;
+
+export const logoutBtn = styled.button`
+  position: absolute;
+  bottom: 30px;
+  border: none;
+  color: #fff;
+  background-color: #121212;
+  width: 90%;
+  height: 40px;
+  padding: 10px;
+  cursor: pointer;
+`;
