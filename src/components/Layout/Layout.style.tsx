@@ -47,14 +47,20 @@ export const NavButton = styled.div<{ active: boolean }>`
   height: 50px;
   border-radius: 6px;
   background-color: ${(props) => (props.active ? "#464646" : "transparent")};
-
-  display: flex;
-  align-items: center;
-
-  // TODO 폰트 크기 안맞음 -> Pretendard 문제인지 확인
+  position: relative;
   font-size: 16px;
   font-weight: 300;
   cursor: pointer;
+
+  img {
+    top: 10px;
+    left: 10px;
+  }
+
+  span {
+    top: 9px;
+    left: 25px;
+  }
 `;
 
 export const hr = styled.div`
@@ -62,4 +68,20 @@ export const hr = styled.div`
   height: 0.5px;
   background: rgba(255, 255, 255, 0.5);
   margin: 30px 0px;
+`;
+
+export const KeywordBtn = styled.button`
+  border: none;
+  color: #fff;
+  background-color: #282828;
+  width: 90%;
+  height: 40px;
+  padding: 10px;
+  border-radius: 50px;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
 `;
