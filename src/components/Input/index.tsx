@@ -2,6 +2,10 @@ import { InputProps } from "@/types";
 
 import { BasicInput } from "./style";
 
+interface CustomInputProps extends InputProps {
+  className?: string;
+}
+
 export const Input = ({
   value,
   type,
@@ -11,20 +15,20 @@ export const Input = ({
   errorLine,
   onKeyDown,
   name,
-}: InputProps) => {
+  className,
+}: CustomInputProps) => {
   return (
-    <div>
-      <BasicInput
-        type={type}
-        value={value}
-        placeholder={placeholder}
-        onChange={onChange}
-        onFocus={onFocus}
-        errorLine={errorLine}
-        onKeyDown={onKeyDown}
-        name={name}
-      />
-    </div>
+    <BasicInput
+      type={type}
+      value={value}
+      placeholder={placeholder}
+      onChange={onChange}
+      onFocus={onFocus}
+      errorLine={errorLine}
+      onKeyDown={onKeyDown}
+      name={name}
+      className={className}
+    />
   );
 };
 
