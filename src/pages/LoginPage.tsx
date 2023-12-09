@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, KeyboardEvent } from "react";
+import { ChangeEvent, useState, KeyboardEvent, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
@@ -12,10 +12,15 @@ import { Toast } from "@/components/Toast";
 import { ToastState } from "@/recoil/atom";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
   const [id, setId] = useState("");
   const [pw, setPw] = useState<string>("");
-  const navigate = useNavigate();
   const [toast, setToast] = useRecoilState(ToastState);
+
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) navigate("/");
+  }, [navigate]);
 
   const handleOnKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {

@@ -7,12 +7,9 @@ import SideNavBar from "./SideNavBar";
 
 const Layout = ({ children }: PropsWithChildren) => {
   const navigate = useNavigate();
+
   useEffect(() => {
-    if (!localStorage.getItem("accessToken")) {
-      navigate("/login");
-    } else {
-      navigate("/");
-    }
+    if (!localStorage.getItem("accessToken")) navigate("/login");
   }, [navigate]);
 
   return (

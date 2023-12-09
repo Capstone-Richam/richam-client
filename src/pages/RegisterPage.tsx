@@ -10,8 +10,15 @@ import Input from "@/components/Input";
 import Logo from "@/components/Logo";
 import { ModalState, googleBtnState, naverBtnState } from "@/recoil/atom";
 
+/** @author hoyyChoi */
 const RegisterPage = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) navigate("/");
+  }, [navigate]);
+
+  // 이 수많은 useState 실화입니까...
   const [userId, setUserId] = useState<string>("");
   const [password1, setPassword1] = useState<string>("");
   const [password2, setPassword2] = useState<string>("");

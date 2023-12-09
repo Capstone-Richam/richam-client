@@ -15,11 +15,7 @@ export async function getMailListAysnc({
 }: MailListRequest): Promise<MailListResponse> {
   const { data } = await getAsync<any>("/mail/header", {
     params: { memberId: 1, type: type.toUpperCase(), page },
-    headers: {
-      Authorization: `Bearer ${localStorage.accessToken}`,
-    },
   });
-
   return {
     content: data?.content,
     page: data.pageable?.pageNumber,
@@ -40,12 +36,8 @@ export async function getFilteredMailListAsync({
     { keywords },
     {
       params: { page },
-      headers: {
-        Authorization: `Bearer ${localStorage.accessToken}`,
-      },
     }
   );
-
   return {
     content: data?.content,
     page: data.pageable?.pageNumber,
@@ -55,11 +47,7 @@ export async function getFilteredMailListAsync({
 
 /** 메일 상세 데이터 조회하는 함수 */
 export async function getMailDetailInfoAsync(id: number): Promise<MailDetailInfoResponse> {
-  const { data } = await getAsync<ApiResponse<MailDetailInfoResponse>>(`/mail/detail/${id}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.accessToken}`,
-    },
-  });
+  const { data } = await getAsync<ApiResponse<MailDetailInfoResponse>>(`/mail/detail/${id}`);
 
   return data;
 }
