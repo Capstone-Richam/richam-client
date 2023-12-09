@@ -37,8 +37,17 @@ export const postRegister = async ({
   return res;
 };
 
-export const postValidationEmail = async ({ Id, Pw }: { Id: string; Pw: string }) => {
+export const postValidationEmail = async ({
+  Id,
+  Pw,
+  email,
+}: {
+  Id: string;
+  Pw: string;
+  email: string;
+}) => {
   const res = await RICHAM.post("/mail/validate", {
+    type: `imap.${email}.com`,
     id: Id,
     password: Pw,
   });
