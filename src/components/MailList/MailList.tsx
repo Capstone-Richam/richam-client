@@ -3,16 +3,22 @@
 import { useEffect, useRef } from "react";
 
 import { useGetInfiniteMailList } from "@/api/query";
+import { MailFilterType } from "@/types";
 
 import Mail from "./Mail";
 import * as styles from "./MailList.style";
 
 export interface MailListProps {
-  type: "ALL" | "GOOGLE" | "NAVER";
+  type: MailFilterType;
+  keywords?: string[];
 }
 
-const MailList = ({ type }: MailListProps) => {
-  const { data, fetchNextPage: fetchNextMailList, hasNextPage } = useGetInfiniteMailList({ type });
+const MailList = ({ type, keywords }: MailListProps) => {
+  const {
+    data,
+    fetchNextPage: fetchNextMailList,
+    hasNextPage,
+  } = useGetInfiniteMailList({ type, keywords });
   const mails = data?.pages.flatMap((page) => page.content) ?? [];
 
   const observerRef = useRef<IntersectionObserver | null>(null);

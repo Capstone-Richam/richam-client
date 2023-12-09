@@ -11,6 +11,7 @@ const Keyword = ({ keyword, state, onClick }: KeyWordProps) => {
   const [keywordArray, setKeywordArray] = useRecoilState(keyWordArrayState);
 
   const DeleteKeyword = (keyword: string) => {
+    alert(`${keyword} 라는 키워드를 삭제할게요!`);
     deleteKeyword(keyword)
       .then(() => {
         setKeywordArray([...keywordArray.filter((item) => item !== keyword)]);

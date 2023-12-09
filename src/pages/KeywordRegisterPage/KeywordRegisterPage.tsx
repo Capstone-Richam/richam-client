@@ -1,4 +1,4 @@
-import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
 
 import { useRecoilState } from "recoil";
 
@@ -9,104 +9,104 @@ import Keyword from "@/components/Keyword";
 import { keyWordArrayState } from "@/recoil/atom/keyword";
 
 import * as styles from "./KeywordRegisterPage.style";
-import { keywordDummyData } from "./keywordDummyData";
+import { recommandKeywords } from "./constant";
 
 const KeywordRegisterPage = () => {
-  const [keyword, setKeyword] = useState<string>("");
-  const [keywordBtn, setKeywordBtn] = useState<boolean>(true);
+  const [keywordInput, setKeywordInput] = useState<string>("");
   const [keywordArray, setKeywordArray] = useRecoilState(keyWordArrayState);
 
-  const KeywordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length > 0) {
-      setKeywordBtn(false);
-    } else {
-      setKeywordBtn(true);
-    }
-    setKeyword(e.target.value);
+  useEffect(() => {
+    getKeywords()
+      .then((res) => setKeywordArray(res.data.data))
+      .catch((err) => console.log(err));
+  }, [setKeywordArray]);
+
+  const handleKeywordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setKeywordInput(e.target.value);
   };
 
   const handleOnKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      AddKeyword();
-    }
+    if (e.key === "Enter") addKeyword(keywordInput);
   };
 
-  const AddKeyword = () => {
-    patchKeyword(keyword).then(() => {
-      setKeywordArray([...keywordArray, keyword]);
-      setKeyword(""); //서버 퉁신
-    });
-  };
-  const AddBtnKeyword = (item: string) => {
-    patchKeyword(item)
+  const addKeyword = (newKeyword: string) => {
+    if (keywordArray.includes(newKeyword)) {
+      alert("이미 등록한 키워드에요!");
+      return;
+    }
+    patchKeyword(newKeyword)
       .then(() => {
-        setKeywordArray([...keywordArray, item]);
-        setKeyword("");
+        alert(`${newKeyword} 를 새로운 키워드로 추가했어요!`);
+        setKeywordArray([...keywordArray, newKeyword]);
+        setKeywordInput("");
       })
       .catch((err) => console.log(err));
   };
-  useEffect(() => {
-    getKeywords()
-      .then((res) => {
-        setKeywordArray(res.data.data);
-      })
-      .catch((err) => console.log(err));
-  }, [setKeywordArray]);
+
   return (
     <styles.Container>
-      <styles.Title>관심 키워드 등록</styles.Title>
+      <styles.Title>관심 키워드 관리</styles.Title>
       <styles.Description>
         관심 있는 키워드를 등록하면 관련 메일을 따로 확인하실 수 있어요!
       </styles.Description>
-      <styles.inputContainer>
-        <styles.Keywordinput>
+
+      <styles.Wrapper>
+        <styles.InputContainer>
           <Input
             type="text"
-            value={keyword}
-            onChange={KeywordChange}
-            placeholder="키워드를 추가해보세요."
             name="keyword"
+            value={keywordInput}
+            placeholder="등록할 키워드를 입력해주세요."
+            onChange={handleKeywordChange}
             onKeyDown={handleOnKeyPress}
+            className="keyword-input"
           />
-        </styles.Keywordinput>
-        <styles.KeywordBtn
-          onClick={AddKeyword}
-          disabled={keywordBtn}
-        >
-          <img src={plus}></img>키워드 추가
-        </styles.KeywordBtn>
-      </styles.inputContainer>
-      <styles.ReigsterKeywordWrapper>
-        <styles.ReigsterKeywordTitle>등록 키워드</styles.ReigsterKeywordTitle>
-        <styles.ReigsterKeywordBox>
-          <styles.ReigsterKeywordInnerBox>
-            {keywordArray.map((item, idx) => (
-              <React.Fragment key={idx}>
+          <styles.KeywordBtn
+            onClick={() => addKeyword(keywordInput)}
+            disabled={keywordInput.length <= 0}
+          >
+            <img src={plus} />
+            추가하기
+          </styles.KeywordBtn>
+        </styles.InputContainer>
+
+        <styles.ReigsterKeywordWrapper>
+          <styles.ReigsterKeywordTitle>현재 등록된 키워드</styles.ReigsterKeywordTitle>
+          <styles.ReigsterKeywordBox>
+            <styles.ReigsterKeywordInnerBox>
+              {keywordArray.length > 0 ? (
+                keywordArray.map((item) => (
+                  <Keyword
+                    key={item}
+                    keyword={item}
+                    state
+                  />
+                ))
+              ) : (
+                <div style={{ color: "rgba(255,255,255,0.6)" }}>
+                  등록되어 있는 키워드가 없어요..
+                </div>
+              )}
+            </styles.ReigsterKeywordInnerBox>
+          </styles.ReigsterKeywordBox>
+        </styles.ReigsterKeywordWrapper>
+
+        <styles.RecommendKeywordWrapper>
+          <styles.RecommendKeywordBox>
+            <styles.RecommendKeywordTitle>👍 이런 키워드도 있어요!</styles.RecommendKeywordTitle>
+            <styles.RecommendKeywordInnerBox>
+              {recommandKeywords.map((item: string) => (
                 <Keyword
-                  keyword={item}
-                  state={true}
-                />
-              </React.Fragment>
-            ))}
-          </styles.ReigsterKeywordInnerBox>
-        </styles.ReigsterKeywordBox>
-      </styles.ReigsterKeywordWrapper>
-      <styles.RecommendKeywordWrapper>
-        <styles.RecommendKeywordBox>
-          <styles.RecommendKeywordTtitle>이런 키워드도 있어요.</styles.RecommendKeywordTtitle>
-          <styles.RecommendKeywordInnerBox>
-            {keywordDummyData.map((item: string, idx: React.Key | null | undefined) => (
-              <React.Fragment key={idx}>
-                <Keyword
+                  key={item}
                   keyword={item}
                   state={false}
-                  onClick={() => AddBtnKeyword(item)}
+                  onClick={() => addKeyword(item)}
                 />
-              </React.Fragment>
-            ))}
-          </styles.RecommendKeywordInnerBox>
-        </styles.RecommendKeywordBox>
-      </styles.RecommendKeywordWrapper>
+              ))}
+            </styles.RecommendKeywordInnerBox>
+          </styles.RecommendKeywordBox>
+        </styles.RecommendKeywordWrapper>
+      </styles.Wrapper>
     </styles.Container>
   );
 };

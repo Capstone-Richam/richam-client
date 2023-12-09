@@ -1,17 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 
-import plus from "@/assets/plus.svg";
+import { getKeywords } from "@/api/keyword";
 import Keyword from "@/components/Keyword";
+import MailList from "@/components/MailList";
 import { keyWordArrayState } from "@/recoil/atom/keyword";
 
 import * as styles from "./KeywordFilteredMailPage.style";
 
 const KeywordFilteredMailPage = () => {
-  const keywordArray = useRecoilValue(keyWordArrayState);
+  const [keywordArray, setKeywordArray] = useRecoilState(keyWordArrayState);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getKeywords()
+      .then((res) => setKeywordArray(res.data.data))
+      .catch((err) => console.log(err));
+  }, [setKeywordArray]);
+
   return (
     <styles.Container>
       <styles.Title>키워드 메일</styles.Title>
@@ -25,15 +33,25 @@ const KeywordFilteredMailPage = () => {
             <React.Fragment key={idx}>
               <Keyword
                 keyword={item}
-                state={false}
+                state={true}
               />
             </React.Fragment>
           ))}
         </styles.KeywordBox>
-        <styles.KeywordBtn onClick={() => navigate("/keyword/new")}>
-          <img src={plus}></img>키워드 등록하기
-        </styles.KeywordBtn>
       </styles.KeywordWrapper>
+      {keywordArray.length > 0 ? (
+        <MailList
+          type="KEYWORD"
+          keywords={keywordArray}
+        />
+      ) : (
+        <styles.KeywordWarningWrapper>
+          현재 등록되어 있는 키워드가 없어요!
+          <styles.KeywordBtn onClick={() => navigate("/keyword/new")}>
+            키워드 등록하러가기
+          </styles.KeywordBtn>
+        </styles.KeywordWarningWrapper>
+      )}
     </styles.Container>
   );
 };

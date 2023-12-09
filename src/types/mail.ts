@@ -16,3 +16,8 @@ export interface MailListResponse {
   /** 다음 페이지 존재 유무 */
   hasNextPage: boolean;
 }
+
+export interface MailDetailInfoResponse {
+  mailInfo: MailInfo;
+  content: string;
+}

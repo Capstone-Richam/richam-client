@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 
 import GoogleLogo from "@/assets/google-circle-logo.svg";
@@ -23,7 +24,7 @@ const Mail = ({ id, type, fromPerson, title, date }: MailProps) => {
       <img src={type === "GOOGLE" ? GoogleLogo : NaverLogo} />
       <styles.Text className="from">{fromPerson}</styles.Text>
       <styles.Text className="title">{title}</styles.Text>
-      <styles.Text className="date">{date.toString()}</styles.Text>
+      <styles.Text className="date">{dayjs(date).format("YYYY/MM/DD hh:mm")}</styles.Text>
     </styles.MailWrapper>
   );
 };

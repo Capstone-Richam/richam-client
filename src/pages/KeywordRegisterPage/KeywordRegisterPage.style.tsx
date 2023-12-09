@@ -1,71 +1,92 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 85%;
-  padding: 60px 80px 0px;
-  color: #fff;
+  width: 100%;
+  padding: 60px 60px 0px;
 `;
 
 export const Title = styled.div`
-  font-size: 30px;
+  font-size: 36px;
   font-weight: 700;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 `;
 
 export const Description = styled.div`
-  font-size: 13px;
-  font-weight: 400;
-  margin-bottom: 30px;
+  font-size: 16px;
+  font-weight: 300;
+  margin-bottom: 80px;
 `;
 
-export const inputContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 90%;
-  height: 35px;
-  margin-bottom: 70px;
+/** 제목, 설명 제외한 모든 컨텐츠 Wrapper */
+export const Wrapper = styled.div`
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
 `;
-export const Keywordinput = styled.div`
-  width: 75%;
+
+export const InputContainer = styled.div`
+  width: 100%;
+  height: 35px;
+  margin: 50px 0px 70px;
+  position: relative;
+
+  .keyword-input {
+    width: 100%;
+    background-color: transparent;
+    color: #fff;
+    border-radius: 0px;
+    border: none;
+    border-bottom: 2px solid #fff;
+    padding-left: 10px;
+    padding-bottom: 10px;
+
+    &::placeholder {
+      color: #fff;
+    }
+  }
 `;
 
 export const KeywordBtn = styled.button<{ disabled: boolean }>`
   border: none;
+  border-radius: 50px;
   opacity: ${(props) => (props.disabled ? ".5" : "1")};
-
   color: #fff;
   background-color: #464646;
-  width: 180px;
-  padding: 20px;
-  border-radius: 50px;
+  width: 100px;
+  padding: 10px;
+
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
   cursor: pointer;
 `;
 
 export const ReigsterKeywordWrapper = styled.div`
-  width: 90%;
+  width: 100%;
   position: relative;
+  margin-bottom: 70px;
 `;
+
 export const ReigsterKeywordTitle = styled.div`
-  width: 100px;
   height: 30px;
   background-color: #212121;
   position: absolute;
   top: -6px;
-  left: 180px;
+  left: 20px;
   z-index: 1;
-  padding: 0 5px;
+  padding: 0 10px;
   text-align: center;
 `;
 
 export const ReigsterKeywordBox = styled.div`
-  width: 70%;
+  width: 100%;
   display: flex;
   border: 2px solid #fff;
-  margin: 0 auto;
 `;
 
 export const ReigsterKeywordInnerBox = styled.div`
@@ -77,21 +98,17 @@ export const ReigsterKeywordInnerBox = styled.div`
 `;
 
 export const RecommendKeywordWrapper = styled.div`
-  margin-top: 30px;
-  width: 90%;
+  width: 100%;
 `;
 
 export const RecommendKeywordBox = styled.div`
-  width: 70%;
-  margin: 45px auto 0px;
+  width: 100%;
 `;
 
-export const RecommendKeywordTtitle = styled.div`
+export const RecommendKeywordTitle = styled.div`
+  font-size: 18px;
+  font-weight: 500;
   color: rgba(255, 255, 255, 0.8);
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
 `;
 
 export const RecommendKeywordInnerBox = styled.div`
