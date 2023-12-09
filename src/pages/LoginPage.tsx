@@ -64,6 +64,7 @@ const LoginPage = () => {
       <div
         style={{
           display: "flex",
+          flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
           height: "100vh",
@@ -74,6 +75,15 @@ const LoginPage = () => {
           loading={loading}
           size={170}
         />
+        <p
+          style={{
+            fontSize: "21px",
+            color: "#FFF",
+            marginTop: "30px",
+          }}
+        >
+          메일 불러오는 중....
+        </p>
       </div>
     );
   } else {
