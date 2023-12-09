@@ -38,7 +38,7 @@ const EmailModal = ({
   };
 
   const EmailRegistration = (email: string) => {
-    postValidationEmail({ Id, Pw })
+    postValidationEmail({ Id, Pw, email })
       .then((res) => {
         console.log(res);
         if (email === "naver") {
