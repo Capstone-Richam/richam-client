@@ -35,6 +35,12 @@ const SideNavBar = () => {
     if (filter !== "KEYWORD" && pathname !== "/") navigate("/");
   };
 
+  const Logout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    window.location.reload();
+  };
+
   return (
     <styles.BarWrapper>
       <img
@@ -59,6 +65,7 @@ const SideNavBar = () => {
       <styles.KeywordBtn onClick={() => navigate("/keyword/new")}>
         관심 키워드 추가
       </styles.KeywordBtn>
+      <styles.logoutBtn onClick={Logout}>로그아웃</styles.logoutBtn>
     </styles.BarWrapper>
   );
 };
