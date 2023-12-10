@@ -65,3 +65,12 @@ export const LoaderWrapper = styled.div`
   align-items: center;
   margin-top: 100px;
 `;
+
+export const EmptyContent = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 20px;
+  margin-top: 100px;
+`;

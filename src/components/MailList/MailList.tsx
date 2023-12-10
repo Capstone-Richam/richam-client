@@ -20,6 +20,7 @@ export interface MailListProps {
 const MailList = ({ type, keywords }: MailListProps) => {
   const {
     data,
+    isLoading,
     fetchNextPage: fetchNextMailList,
     hasNextPage,
   } = useGetInfiniteMailList({ type, keywords });
@@ -46,16 +47,22 @@ const MailList = ({ type, keywords }: MailListProps) => {
     };
   }, [targetRef, fetchNextMailList, hasNextPage, setLoading]);
 
+  if (isLoading) {
+    return (
+      <styles.LoaderWrapper>
+        <ClipLoader
+          color="#fff"
+          loading={loading}
+          size={150}
+        />
+      </styles.LoaderWrapper>
+    );
+  }
+
   return (
     <>
       {mails.length <= 0 ? (
-        <styles.LoaderWrapper>
-          <ClipLoader
-            color="#fff"
-            loading={loading}
-            size={150}
-          />
-        </styles.LoaderWrapper>
+        <styles.EmptyContent>메일 데이터가 존재하지 않아요!</styles.EmptyContent>
       ) : (
         <styles.ListWrapper>
           {mails.map((mail) => (
