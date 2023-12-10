@@ -2,13 +2,15 @@ import { PropsWithChildren } from "react";
 
 import { ErrorBoundary as ErrBoundary, FallbackProps } from "react-error-boundary";
 
-const FallbackComponent = ({ error }: FallbackProps) => {
-  console.log(error);
+import * as styles from "./ErrorBoundary.style";
+
+const FallbackComponent = ({ error, resetErrorBoundary }: FallbackProps) => {
+  console.error(error);
   return (
-    <div>
-      서비스에 문제가 발생했어요. 다시 시도해주세요!
-      {/*<button onClick={resetErrorBoundary}>새로고침</button>*/}
-    </div>
+    <styles.ErrorContainer>
+      저희 서비스에 문제가 발생했어요..😔 다시 한번 시도해주세요!
+      <styles.RefreshButton onClick={resetErrorBoundary}>새로고침</styles.RefreshButton>
+    </styles.ErrorContainer>
   );
 };
 

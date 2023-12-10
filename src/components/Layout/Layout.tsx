@@ -2,6 +2,8 @@ import { PropsWithChildren, useEffect } from "react";
 
 import { Outlet, useNavigate } from "react-router-dom";
 
+import ErrorBoundary from "../ErrorBoundary";
+
 import * as styles from "./Layout.style";
 import SideNavBar from "./SideNavBar";
 
@@ -15,7 +17,7 @@ const Layout = ({ children }: PropsWithChildren) => {
   return (
     <styles.Wrapper>
       <SideNavBar />
-      {children || <Outlet />}
+      <ErrorBoundary>{children || <Outlet />}</ErrorBoundary>
     </styles.Wrapper>
   );
 };
