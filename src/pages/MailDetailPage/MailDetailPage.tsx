@@ -18,10 +18,10 @@ const MailDetailPage = () => {
             {data.mailInfo.fromPerson} •{" "}
             {dayjs(data.mailInfo.date).format("YYYY년 MM월 DD일 hh시 mm분")}
           </styles.Description>
-          {data.content ? (
+          {data.content && data.content.length > 1 ? (
             <styles.Content dangerouslySetInnerHTML={{ __html: data.content }} />
           ) : (
-            <>메일을 불러오는 데 실패했어요.</>
+            <>메일을 불러오는 데 실패했어요 🥹</>
           )}
         </styles.Container>
       )}
