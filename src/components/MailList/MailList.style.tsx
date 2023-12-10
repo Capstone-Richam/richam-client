@@ -58,3 +58,10 @@ export const Box = styled.div`
   width: 100%;
   height: 30px;
 `;
+
+export const LoaderWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+`;
