@@ -51,3 +51,14 @@ export async function getMailDetailInfoAsync(id: number): Promise<MailDetailInfo
 
   return data;
 }
+
+/** 메일 불러오기 IMAP */
+export const updateImapMailAsync = async (type: string) => {
+  const res = await getAsync(`/mail/mails?type=${type}`, {
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+      Authorization: `Bearer ${localStorage.accessToken}`,
+    },
+  });
+  return res;
+};
