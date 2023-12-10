@@ -7,6 +7,7 @@ import GoogleLogo from "@/assets/google-circle-logo.svg";
 import NaverLogo from "@/assets/naver-circle-logo.svg";
 
 import * as styles from "./MailList.style";
+import { convertToLabel } from "./constant";
 
 export interface MailProps {
   id: number;
@@ -22,7 +23,7 @@ const Mail = ({ id, type, fromPerson, title, date }: MailProps) => {
   return (
     <styles.MailWrapper onClick={() => navigate(`/${id}`)}>
       <img src={type === "GOOGLE" ? GoogleLogo : NaverLogo} />
-      <styles.Text className="from">{fromPerson}</styles.Text>
+      <styles.Text className="from">{convertToLabel(fromPerson)}</styles.Text>
       <styles.Text className="title">{title}</styles.Text>
       <styles.Text className="date">{dayjs(date).format("YYYY/MM/DD hh:mm")}</styles.Text>
     </styles.MailWrapper>
