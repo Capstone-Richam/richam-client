@@ -1,7 +1,6 @@
 import { ChangeEvent, useState, KeyboardEvent, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
-import ClipLoader from "react-spinners/ClipLoader";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
