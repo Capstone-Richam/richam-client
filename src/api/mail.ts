@@ -5,12 +5,7 @@ import { ApiResponse, getAsync, postAsync } from ".";
 
 /** IMAP 메일 데이터 업데이트  */
 export const updateImapMailAsync = async (type: string) => {
-  const res = await getAsync(`/mail/mails?type=${type}`, {
-    headers: {
-      "Content-Type": "application/json;charset=UTF-8",
-      Authorization: `Bearer ${localStorage.accessToken}`,
-    },
-  });
+  const res = await getAsync(`/mail/mails?type=${type}`);
   return res;
 };
 
@@ -25,13 +20,13 @@ export async function getMailListAysnc({
   page,
 }: MailListRequest): Promise<MailListResponse> {
   const { data } = await getAsync<any>("/mail/header", {
-    params: { memberId: 1, type: type.toUpperCase(), page },
+    params: { type: type.toUpperCase(), page },
   });
 
   if (page == 0) {
     const [res1, res2] = await Promise.all([
-      updateImapMailAsync("NAVER"),
-      updateImapMailAsync("GOOGLE"),
+      type !== "GOOGLE" ? updateImapMailAsync("NAVER") : () => true,
+      type !== "NAVER" ? updateImapMailAsync("GOOGLE") : () => true,
     ]);
 
     if (res1 && res2) {
@@ -42,7 +37,6 @@ export async function getMailListAysnc({
       };
     }
   }
-
   return {
     content: data?.content,
     page: data.pageable?.pageNumber,
