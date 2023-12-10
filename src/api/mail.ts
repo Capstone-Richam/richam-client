@@ -3,6 +3,17 @@ import { MailDetailInfoResponse, MailListResponse } from "@/types";
 
 import { ApiResponse, getAsync, postAsync } from ".";
 
+/** IMAP 메일 데이터 업데이트  */
+export const updateImapMailAsync = async (type: string) => {
+  const res = await getAsync(`/mail/mails?type=${type}`, {
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+      Authorization: `Bearer ${localStorage.accessToken}`,
+    },
+  });
+  return res;
+};
+
 interface MailListRequest {
   type?: "ALL" | "GOOGLE" | "NAVER";
   page: number;
@@ -18,8 +29,18 @@ export async function getMailListAysnc({
   });
 
   if (page == 0) {
-    updateImapMailAsync("NAVER");
-    updateImapMailAsync("GOOGLE");
+    const [res1, res2] = await Promise.all([
+      updateImapMailAsync("NAVER"),
+      updateImapMailAsync("GOOGLE"),
+    ]);
+
+    if (res1 && res2) {
+      return {
+        content: data?.content,
+        page: data.pageable?.pageNumber,
+        hasNextPage: !data.last,
+      };
+    }
   }
 
   return {
@@ -57,14 +78,3 @@ export async function getMailDetailInfoAsync(id: number): Promise<MailDetailInfo
 
   return data;
 }
-
-/** 메일 불러오기 IMAP */
-export const updateImapMailAsync = async (type: string) => {
-  const res = await getAsync(`/mail/mails?type=${type}`, {
-    headers: {
-      "Content-Type": "application/json;charset=UTF-8",
-      Authorization: `Bearer ${localStorage.accessToken}`,
-    },
-  });
-  return res;
-};
