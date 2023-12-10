@@ -19,3 +19,8 @@ export const ToastState = atom({
   key: "ToastState",
   default: false,
 });
+
+export const LoadingState = atom({
+  key: "LoadingState",
+  default: true,
+});

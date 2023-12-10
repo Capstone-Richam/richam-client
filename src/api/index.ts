@@ -44,3 +44,14 @@ export async function postAsync<T, D>(url: string, data: D, config?: AxiosReques
     throw new Error();
   }
 }
+
+/** 메일 불러오기 IMAP */
+export const getImapMail = async (type: string) => {
+  const res = await RICHAM.get(`/mail/mails?type=${type}`, {
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+      Authorization: `Bearer ${localStorage.accessToken}`,
+    },
+  });
+  return res;
+};

@@ -1,9 +1,11 @@
 import { ChangeEvent, useState, KeyboardEvent, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
+import { getImapMail } from "@/api";
 import { postLogin } from "@/api/login";
 import { LoginButton } from "@/components/Button";
 import Input from "@/components/Input";
@@ -17,7 +19,7 @@ const LoginPage = () => {
   const [id, setId] = useState("");
   const [pw, setPw] = useState<string>("");
   const [toast, setToast] = useRecoilState(ToastState);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (localStorage.getItem("accessToken")) navigate("/");
   }, [navigate]);
@@ -34,7 +36,15 @@ const LoginPage = () => {
         console.log(res);
         localStorage.setItem("accessToken", res.data.data.accessToken);
         localStorage.setItem("refreshToken", res.data.data.refreshToken);
-        navigate("/");
+        setLoading(true);
+        getImapMail("NAVER").then((res) => {
+          console.log(res);
+          getImapMail("google").then((res) => {
+            console.log(res);
+            setLoading(false);
+            navigate("/");
+          });
+        });
       })
       .catch(() => {
         setToast(true);
@@ -49,41 +59,70 @@ const LoginPage = () => {
     navigate("/register");
   };
 
-  return (
-    <Container>
-      {toast && <Toast message="아이디 또는 비밀번호를 다시 입력해주세요." />}
-      <Logo />
-      <InputBox>
-        <Input
-          type="text"
-          value={id}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setId(e.target.value)}
-          placeholder="아이디"
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <ClipLoader
+          color="#fff"
+          loading={loading}
+          size={170}
         />
-        <Input
-          type="password"
-          value={pw}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setPw(e.target.value)}
-          placeholder="비밀번호 (영문, 숫자, 특수문자 포함 8~30자)"
-          onKeyDown={handleOnKeyPress}
-        />
-      </InputBox>
-      <LoginButton onClick={Login}>로그인</LoginButton>
-      <OrLine>
-        <div></div>
-        <p>또는</p>
-        <div></div>
-      </OrLine>
-      <LoginButton onClick={Register}>회원가입</LoginButton>
-      <EtcBox>
-        <div className="findProp">
-          <p className="notActive">아이디 찾기</p>
-          <p>|</p>
-          <p className="notActive">비밀번호 찾기</p>
-        </div>
-      </EtcBox>
-    </Container>
-  );
+        <p
+          style={{
+            fontSize: "21px",
+            color: "#FFF",
+            marginTop: "30px",
+          }}
+        >
+          메일 불러오는 중....
+        </p>
+      </div>
+    );
+  } else {
+    return (
+      <Container>
+        {toast && <Toast message="아이디 또는 비밀번호를 다시 입력해주세요." />}
+        <Logo />
+        <InputBox>
+          <Input
+            type="text"
+            value={id}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setId(e.target.value)}
+            placeholder="아이디"
+          />
+          <Input
+            type="password"
+            value={pw}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setPw(e.target.value)}
+            placeholder="비밀번호 (영문, 숫자, 특수문자 포함 8~30자)"
+            onKeyDown={handleOnKeyPress}
+          />
+        </InputBox>
+        <LoginButton onClick={Login}>로그인</LoginButton>
+        <OrLine>
+          <div></div>
+          <p>또는</p>
+          <div></div>
+        </OrLine>
+        <LoginButton onClick={Register}>회원가입</LoginButton>
+        <EtcBox>
+          <div className="findProp">
+            <p className="notActive">아이디 찾기</p>
+            <p>|</p>
+            <p className="notActive">비밀번호 찾기</p>
+          </div>
+        </EtcBox>
+      </Container>
+    );
+  }
 };
 
 export default LoginPage;
