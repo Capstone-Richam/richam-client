@@ -6,6 +6,7 @@ export interface MailInfo {
   title: string;
   fromPerson: string;
   date: Date;
+  keyword?: string;
 }
 
 export interface MailListResponse {

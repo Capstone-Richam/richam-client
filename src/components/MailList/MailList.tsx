@@ -68,11 +68,12 @@ const MailList = ({ type, keywords }: MailListProps) => {
           {mails.map((mail) => (
             <Mail
               key={mail.mailId}
-              id={mail.mailId}
+              mailId={mail.mailId}
               type={mail.type}
               title={mail.title}
               fromPerson={mail.fromPerson}
               date={mail.date}
+              keyword={mail.keyword}
             />
           ))}
           <styles.Box ref={targetRef} />

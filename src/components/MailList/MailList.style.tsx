@@ -17,25 +17,35 @@ export const MailWrapper = styled.div`
   align-items: center;
   cursor: pointer;
 
+  img {
+    margin-right: 25px;
+  }
+
   .from {
-    left: 5%;
-    overflow: hidden; // 을 사용해 영역을 감출 것
-    text-overflow: ellipsis; // 로 ... 을 만들기
-    white-space: nowrap; // 아래줄로 내려가는 것을 막기위해
-    word-break: break-all;
-    width: 17%;
+    width: 180px;
+    margin-right: 40px;
+  }
+
+  .keyword {
+    background-color: #e4e4e4;
+    color: #464646;
+    height: 30px;
+    padding: 0px 12px;
+    margin-right: 15px;
+    border-radius: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .title {
-    left: 30%;
-    overflow: hidden; // 을 사용해 영역을 감출 것
-    text-overflow: ellipsis; // 로 ... 을 만들기
-    white-space: nowrap; // 아래줄로 내려가는 것을 막기위해
-    word-break: break-all;
-    width: 40%;
+    width: 70%;
+    /*min-width: 500px;*/
   }
 
   .date {
+    position: absolute;
     right: 5%;
   }
 `;
@@ -50,8 +60,16 @@ export const LogoWrapper = styled.div`
 `;
 
 export const Text = styled.div`
-  position: absolute;
-  top: 25px;
+  overflow: hidden; // 을 사용해 영역을 감출 것
+  text-overflow: ellipsis; // 로 ... 을 만들기
+  white-space: nowrap; // 아래줄로 내려가는 것을 막기위해
+  word-break: break-all;
+`;
+
+export const TitleWrapper = styled.div`
+  width: 60%;
+  display: flex;
+  align-items: center;
 `;
 
 export const Box = styled.div`
