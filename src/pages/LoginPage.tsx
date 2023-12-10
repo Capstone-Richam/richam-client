@@ -2,7 +2,7 @@ import { ChangeEvent, useState, KeyboardEvent, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import { postLogin } from "@/api/login";
@@ -18,8 +18,8 @@ const LoginPage = () => {
 
   const [id, setId] = useState("");
   const [pw, setPw] = useState<string>("");
-  const [toast, setToast] = useRecoilState(ToastState);
   const [loading, setLoading] = useState(false);
+  const toast = useRecoilValue(ToastState);
 
   useEffect(() => {
     if (localStorage.getItem("accessToken")) navigate("/");
