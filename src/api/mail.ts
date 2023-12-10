@@ -10,12 +10,18 @@ interface MailListRequest {
 
 /** 메일 목록 조회하는 함수 */
 export async function getMailListAysnc({
-  type = "GOOGLE",
+  type = "ALL",
   page,
 }: MailListRequest): Promise<MailListResponse> {
   const { data } = await getAsync<any>("/mail/header", {
     params: { memberId: 1, type: type.toUpperCase(), page },
   });
+
+  if (page == 0) {
+    updateImapMailAsync("NAVER");
+    updateImapMailAsync("GOOGLE");
+  }
+
   return {
     content: data?.content,
     page: data.pageable?.pageNumber,
