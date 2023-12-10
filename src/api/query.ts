@@ -27,6 +27,7 @@ export const useGetInfiniteMailList = ({
       }
       return undefined;
     },
+    staleTime: 5 * 1000,
   });
 
 export const useGetMailDetailInfo = ({ id }: { id: number }) =>
