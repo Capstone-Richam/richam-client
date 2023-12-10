@@ -2,11 +2,11 @@ import { ChangeEvent, useState, KeyboardEvent, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
-import { getImapMail } from "@/api";
 import { postLogin } from "@/api/login";
+import { updateImapMailAsync } from "@/api/mail";
 import { LoginButton } from "@/components/Button";
 import Input from "@/components/Input";
 import Logo from "@/components/Logo";
@@ -18,8 +18,9 @@ const LoginPage = () => {
 
   const [id, setId] = useState("");
   const [pw, setPw] = useState<string>("");
-  const [toast, setToast] = useRecoilState(ToastState);
   const [loading, setLoading] = useState(false);
+  const toast = useRecoilValue(ToastState);
+
   useEffect(() => {
     if (localStorage.getItem("accessToken")) navigate("/");
   }, [navigate]);
@@ -30,29 +31,20 @@ const LoginPage = () => {
     }
   };
 
-  const Login = () => {
-    postLogin({ id, pw })
-      .then((res) => {
-        console.log(res);
-        localStorage.setItem("accessToken", res.data.data.accessToken);
-        localStorage.setItem("refreshToken", res.data.data.refreshToken);
-        setLoading(true);
-        getImapMail("NAVER").then((res) => {
-          console.log(res);
-          getImapMail("google").then((res) => {
-            console.log(res);
-            setLoading(false);
-            navigate("/");
-          });
-        });
-      })
-      .catch(() => {
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 1500);
-      });
-    //로그인 api
+  const Login = async () => {
+    const { data } = await postLogin({ id, pw });
+    localStorage.setItem("accessToken", data.data.accessToken);
+    localStorage.setItem("refreshToken", data.data.refreshToken);
+
+    setLoading(true);
+    const [res1, res2] = await Promise.all([
+      updateImapMailAsync("NAVER"),
+      updateImapMailAsync("GOOGLE"),
+    ]);
+    if (res1 && res2) {
+      setLoading(false);
+      navigate("/");
+    }
   };
 
   const Register = () => {

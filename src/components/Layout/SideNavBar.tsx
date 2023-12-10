@@ -38,7 +38,7 @@ const SideNavBar = () => {
   const Logout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
-    window.location.reload();
+    navigate("/login");
   };
 
   return (
