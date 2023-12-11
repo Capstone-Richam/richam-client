@@ -4,7 +4,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 
 import { postValidationEmail } from "@/api/login";
 import Xicon from "@/assets/Xicon.svg";
-import google from "@/assets/google.svg";
+import gmail from "@/assets/google.svg";
 import naver from "@/assets/naver.svg";
 import { ModalState, ToastState, googleBtnState, naverBtnState } from "@/recoil/atom";
 
@@ -43,7 +43,7 @@ const EmailModal = ({
         console.log(res);
         if (email === "naver") {
           setNaverBtn(true);
-        } else if (email === "google") {
+        } else if (email === "gmail") {
           setGoogleBtn(true);
         }
         setModal("");
@@ -87,7 +87,7 @@ const EmailModal = ({
         </CloseButtonStyle>
 
         <img
-          src={email === "naver" ? naver : google}
+          src={email === "naver" ? naver : gmail}
           alt="네이버"
           width={200}
         />

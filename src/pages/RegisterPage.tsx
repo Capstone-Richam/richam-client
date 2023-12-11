@@ -203,7 +203,7 @@ const RegisterPage = () => {
         />
       ) : modal === "google" ? (
         <EmailModal
-          email="google"
+          email="gmail"
           Id={googleId}
           setId={setGoogleId}
           Pw={googlePw}
