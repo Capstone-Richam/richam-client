@@ -41,12 +41,12 @@ export const ButtonWrapper = styled.div`
   width: 100%;
 `;
 
-export const NavButton = styled.div<{ active: boolean }>`
+export const NavButton = styled.div<{ $active: boolean }>`
   width: 100%;
   padding: 8px 14px;
   height: 50px;
   border-radius: 6px;
-  background-color: ${(props) => (props.active ? "#464646" : "transparent")};
+  background-color: ${(props) => (props.$active ? "#464646" : "transparent")};
   position: relative;
   font-size: 16px;
   font-weight: 300;

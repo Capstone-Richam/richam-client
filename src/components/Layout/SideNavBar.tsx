@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
@@ -49,17 +49,17 @@ const SideNavBar = () => {
       />
       <styles.ButtonWrapper>
         {(Object.keys(INFO) as MailFilterType[]).map((filter) => (
-          <>
+          <React.Fragment key={filter}>
             {filter === "KEYWORD" && <styles.hr />}
             <styles.NavButton
               key={filter}
-              active={currentFilter === filter && pathname !== "/keyword/new"}
+              $active={currentFilter === filter && pathname !== "/keyword/new"}
               onClick={() => onClickFilterButton(filter)}
             >
               <img src={INFO[filter].icon} />
               <span>{INFO[filter].label} 메일</span>
             </styles.NavButton>
-          </>
+          </React.Fragment>
         ))}
       </styles.ButtonWrapper>
       <styles.KeywordBtn onClick={() => navigate("/keyword/new")}>
