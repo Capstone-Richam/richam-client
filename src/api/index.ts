@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
 export const RICHAM = axios.create({
-  baseURL: "https://dev.richam.site/api",
+  baseURL: "https://kusitms28.store/api",
   headers: {
     "Content-Type": "application/json;charset=UTF-8",
   },
