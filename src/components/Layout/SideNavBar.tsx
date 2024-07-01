@@ -65,6 +65,7 @@ const SideNavBar = () => {
       <styles.KeywordBtn onClick={() => navigate("/keyword/new")}>
         관심 키워드 추가
       </styles.KeywordBtn>
+      <styles.PostBtn onClick={() => navigate("/postmail")}>메일 보내기</styles.PostBtn>
       <styles.logoutBtn onClick={Logout}>로그아웃</styles.logoutBtn>
     </styles.BarWrapper>
   );

@@ -86,6 +86,24 @@ export const KeywordBtn = styled.button`
   cursor: pointer;
 `;
 
+export const PostBtn = styled.button`
+  position: absolute;
+  bottom: 100px;
+  border: none;
+  color: #fff;
+  background-color: #282828;
+  width: 90%;
+  height: 40px;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+`;
+
 export const logoutBtn = styled.button`
   position: absolute;
   bottom: 30px;
