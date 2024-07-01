@@ -4,6 +4,7 @@ import KeywordRegisterPage from "@/pages/KeywordRegisterPage";
 import LoginPage from "@/pages/LoginPage";
 import MailDetailPage from "@/pages/MailDetailPage";
 import MainPage from "@/pages/MainPage/MainPage";
+import PostMailPage from "@/pages/PostMailPage";
 import RegisterPage from "@/pages/RegisterPage";
 
 const routes = [
@@ -27,8 +28,13 @@ const routes = [
         path: "keyword/new",
         element: <KeywordRegisterPage />,
       },
+      {
+        path: "/postmail",
+        element: <PostMailPage />,
+      },
     ],
   },
+
   {
     path: "/login",
     element: <LoginPage />,
