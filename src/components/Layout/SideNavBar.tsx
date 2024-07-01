@@ -53,7 +53,9 @@ const SideNavBar = () => {
             {filter === "KEYWORD" && <styles.hr />}
             <styles.NavButton
               key={filter}
-              $active={currentFilter === filter && pathname !== "/keyword/new"}
+              $active={
+                currentFilter === filter && pathname !== "/keyword/new" && pathname !== "/postmail"
+              }
               onClick={() => onClickFilterButton(filter)}
             >
               <img src={INFO[filter].icon} />
