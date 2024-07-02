@@ -29,3 +29,9 @@ export interface postEmail {
   header: string;
   body: string;
 }
+
+export interface promptResponse {
+  body: string;
+  header: string;
+  template: string;
+}

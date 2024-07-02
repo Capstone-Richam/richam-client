@@ -5,12 +5,13 @@ import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { Editor as TinyMCEEditor } from "tinymce";
 
-import { postMailAPI } from "@/api/postmail";
+import { postMailAPI, promptAI } from "@/api/postmail";
 import GoogleLogo from "@/assets/google-circle-logo.svg";
 import NaverLogo from "@/assets/naver-circle-logo.svg";
 import postIcon from "@/assets/postIcon.svg";
+import promptIcon from "@/assets/promptIcon.svg";
 import { Toast } from "@/components/Toast";
-import { postEmail } from "@/types";
+import { postEmail, promptResponse } from "@/types";
 
 import * as styles from "./PostMailPage.style";
 
@@ -27,8 +28,16 @@ const PostMailPage = () => {
     header: "",
     body: "",
   });
+  const [promptContent, setPromptContent] = useState<string>("");
+  const [responseContent, setResponseContent] = useState<promptResponse>({
+    body: "",
+    header: "",
+    template: "",
+  });
+
   const [lazy, setLazy] = useState({
     loading: false,
+    promptLoading: false,
     toastError: false,
     toastComplete: false,
   });
@@ -57,18 +66,23 @@ const PostMailPage = () => {
     }
   };
 
+  const postPrompt = async () => {
+    setResponseContent({
+      body: "",
+      header: "",
+      template: "",
+    });
+    setLazy({ ...lazy, promptLoading: true });
+    const data = await promptAI(promptContent);
+    setResponseContent(data);
+    setLazy({ ...lazy, promptLoading: false });
+  };
+
   const contentPush = () => {
     if (editorRef.current) {
       const cur = editorRef.current.getContent();
 
-      editorRef.current.setContent(
-        cur +
-          `<p>제목: [단체명] S전자 대리 과정 강의 요청 (1/10 금 09:00~12:00)
-<br/>
-제목: [A부서] 행사 일정 안내 (1/27 금 18:00-22:00 대한호텔)
-
-</p>`
-      );
+      editorRef.current.setContent(cur + responseContent.body);
     }
   };
 
@@ -137,9 +151,51 @@ const PostMailPage = () => {
               link_context_toolbar: true,
             }}
           />
+          <styles.AIPrompt>
+            <div className="text">
+              <div className="AI_header">메일 형식이 궁금할 땐?</div>
+              <div className="AI_description">
+                ai 기술을 활용해 만든 메일 형식 제공 프롬프트입니다.
+                <br />
+                원하는 형식을 입력 후, 사용해보세요!!
+              </div>
+            </div>
+            <div className="prompt_input">
+              <input
+                type="text"
+                onChange={(e) => setPromptContent(e.target.value)}
+                value={promptContent}
+              />
+              <div className="prompt_button">
+                <img
+                  src={promptIcon}
+                  onClick={postPrompt}
+                />
+              </div>
+            </div>
+            {lazy.promptLoading && (
+              <div className="prompt_loading">
+                <ClipLoader
+                  color="#fff"
+                  loading={lazy.promptLoading}
+                  size={150}
+                />
+                시간이 걸릴 수 있습니다!
+              </div>
+            )}
+            {responseContent.header && (
+              <div>
+                <div className="header">{responseContent.header}</div>
+                <div
+                  className="content"
+                  dangerouslySetInnerHTML={{ __html: responseContent.body }}
+                ></div>
+                <button onClick={contentPush}>추가하기</button>
+              </div>
+            )}
+          </styles.AIPrompt>
         </styles.Editor>
       </styles.innerContainer>
-      <button onClick={contentPush}>클릭</button>
       <styles.Content>{post.body}</styles.Content>
     </styles.Container>
   );

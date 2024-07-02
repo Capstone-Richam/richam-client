@@ -40,7 +40,7 @@ export const Editor = styled.div`
   width: 100%;
   height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 30px;
   .tox .tox-edit-area::before {
     border: 2px solid #0a0c0e !important;
@@ -130,4 +130,72 @@ export const HeaderTitle = styled.div`
 export const Content = styled.div`
   font-size: 30px;
   color: #fff;
+`;
+
+export const AIPrompt = styled.div`
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #fff;
+  }
+  .AI_header {
+    font-size: 20px;
+    font-weight: 700;
+    opacity: 0.9;
+  }
+  .AI_description {
+    font-size: 16px;
+    opacity: 0.6;
+    line-height: 22px;
+  }
+  .prompt_input {
+    display: flex;
+    gap: 10px;
+  }
+  input {
+    width: 100%;
+    flex: 1;
+    height: 50px;
+    padding: 10px;
+    box-shadow: none;
+    font-size: 1em;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    caret-color: #fff;
+    color: #fff;
+  }
+
+  input:focus {
+    outline: none;
+    border: 1px solid rgba(255, 255, 255, 1);
+  }
+
+  .prompt_button {
+    width: 50px;
+    height: 50px;
+    border-radius: 10%;
+    background-color: rgba(255, 255, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .prompt_loading {
+    margin: 20px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 `;
