@@ -42,7 +42,7 @@ const PostMailPage = () => {
           </styles.Title>
         </styles.Header>
         <Editor
-          apiKey="ccfx0pf39d4vhnoet8mtq1tcx6vtm27xluwq60alr1lbw01e"
+          apiKey={import.meta.env.VITE_editor_api_key}
           value={content}
           onEditorChange={onEditorChange}
           onInit={(_, editor) => (editorRef.current = editor)}
