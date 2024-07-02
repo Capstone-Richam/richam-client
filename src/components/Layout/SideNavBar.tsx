@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 
+import editorIcon from "@/assets/edit.svg";
 import AllIcon from "@/assets/filter-all.svg";
 import GoogleIcon from "@/assets/filter-google.svg";
 import KeywordIcon from "@/assets/filter-keyword.svg";
@@ -67,7 +68,10 @@ const SideNavBar = () => {
       <styles.KeywordBtn onClick={() => navigate("/keyword/new")}>
         관심 키워드 추가
       </styles.KeywordBtn>
-      <styles.PostBtn onClick={() => navigate("/postmail")}>메일 보내기</styles.PostBtn>
+      <styles.PostBtn onClick={() => navigate("/postmail")}>
+        <img src={editorIcon} />
+        메일 보내기
+      </styles.PostBtn>
       <styles.logoutBtn onClick={Logout}>로그아웃</styles.logoutBtn>
     </styles.BarWrapper>
   );

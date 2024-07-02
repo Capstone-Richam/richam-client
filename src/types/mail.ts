@@ -22,3 +22,10 @@ export interface MailDetailInfoResponse {
   mailInfo: MailInfo;
   content: string;
 }
+
+export interface postEmail {
+  platform: string;
+  mail: string;
+  header: string;
+  body: string;
+}
