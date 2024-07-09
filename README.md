@@ -1,6 +1,4 @@
-# 스팸보단 리챔
-
-## RTS (Richam Than Spam)
+# emap (email roadmap)
 
 ---
 

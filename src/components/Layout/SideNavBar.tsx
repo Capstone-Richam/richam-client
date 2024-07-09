@@ -8,7 +8,7 @@ import AllIcon from "@/assets/filter-all.svg";
 import GoogleIcon from "@/assets/filter-google.svg";
 import KeywordIcon from "@/assets/filter-keyword.svg";
 import NaverIcon from "@/assets/filter-naver.svg";
-import logo from "@/assets/richamLogo.svg";
+import logo from "@/assets/sidebar_logo.svg";
 import { MailFilterAtom } from "@/recoil/atom/mail";
 import { MailFilterType } from "@/types";
 
@@ -45,6 +45,7 @@ const SideNavBar = () => {
   return (
     <styles.BarWrapper>
       <img
+        className="emap_logo"
         src={logo}
         height={30}
       />

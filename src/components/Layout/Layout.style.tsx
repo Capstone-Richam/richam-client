@@ -30,6 +30,11 @@ export const BarWrapper = styled.div`
   .keyword-btn {
     width: 100%;
   }
+
+  .emap_logo {
+    width: 80%;
+    height: auto;
+  }
 `;
 
 export const ButtonWrapper = styled.div`
@@ -37,7 +42,7 @@ export const ButtonWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  margin-top: 50px;
+  margin-top: 35px;
   width: 100%;
 `;
 
