@@ -22,6 +22,7 @@ const mailLogo = [
 
 const PostMailPage = () => {
   const navigate = useNavigate();
+  const [sendMail, setSendmail] = useState<string>(localStorage.getItem("GOOGLE") || "GOOGLE");
   const [post, setPost] = useState<postEmail>({
     platform: "GOOGLE",
     mail: "",
@@ -115,6 +116,13 @@ const PostMailPage = () => {
               <input onChange={(e) => setPost({ ...post, mail: e.target.value })} />
             </styles.HeaderTitle>
             <styles.HeaderTitle>
+              <span>송신 메일</span>
+              <input
+                className="send_input"
+                value={sendMail}
+              />
+            </styles.HeaderTitle>
+            <styles.HeaderTitle>
               <span>제목</span>
               <input
                 value={post.header}
@@ -130,7 +138,10 @@ const PostMailPage = () => {
                   key={idx}
                   src={logo.url}
                   alt={logo.name}
-                  onClick={() => setPost({ ...post, platform: logo.name })}
+                  onClick={() => {
+                    setPost({ ...post, platform: logo.name });
+                    setSendmail(localStorage.getItem(logo.name) || logo.name);
+                  }}
                 />
               ))}
               <span className="send">송신할 메일</span>

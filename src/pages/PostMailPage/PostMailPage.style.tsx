@@ -132,6 +132,10 @@ export const HeaderTitle = styled.div`
     outline: none;
     border-bottom: 1px solid rgba(255, 255, 255, 1);
   }
+
+  .send_input {
+    pointer-events: none;
+  }
 `;
 
 export const Content = styled.div`

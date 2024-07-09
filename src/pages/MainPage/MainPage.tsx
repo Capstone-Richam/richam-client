@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect } from "react";
+
 import { useRecoilValue } from "recoil";
 
+import { getMail } from "@/api/postmail";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import MailList from "@/components/MailList";
 import { MailFilterAtom } from "@/recoil/atom/mail";
@@ -20,6 +23,20 @@ const INFO: Record<any, { title: string; description: string }> = {
 
 const MainPage = () => {
   const mailFilter = useRecoilValue(MailFilterAtom);
+
+  const getMailFunction = async () => {
+    const data = await getMail();
+    localStorage.setItem("GOOGLE", data.GOOGLE);
+    if (data.NAVER.includes("@")) {
+      localStorage.setItem("NAVER", `${data.NAVER}`);
+    } else {
+      localStorage.setItem("NAVER", `${data.NAVER}@naver.com`);
+    }
+  };
+
+  useEffect(() => {
+    getMailFunction();
+  }, []);
 
   return (
     <styles.Container>
