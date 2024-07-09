@@ -70,6 +70,7 @@ export const HeaderRight = styled.div`
 `;
 
 export const togglesButton = styled.div`
+  position: relative;
   width: fit-content;
   display: flex;
   gap: 10px;
@@ -81,6 +82,12 @@ export const togglesButton = styled.div`
   }
   img.active {
     opacity: 1;
+  }
+  .send {
+    position: absolute;
+    top: -20px;
+    left: 6px;
+    font-size: 12px;
   }
 `;
 
@@ -197,5 +204,50 @@ export const AIPrompt = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
+  }
+
+  .response_content {
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+
+  .response_content span {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .header {
+    font-size: 20px;
+    padding: 15px 0 30px;
+  }
+  .content {
+    font-size: 16px;
+    line-height: 22px;
+    padding: 15px 0 30px;
+  }
+  .button_wrapper {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    padding-bottom: 50px;
+  }
+  .button_wrapper button {
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.3);
+    box-shadow: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+  }
+  .button_wrapper button:hover {
+    transform: translateY(-5px);
+    transition: 0.3s;
   }
 `;

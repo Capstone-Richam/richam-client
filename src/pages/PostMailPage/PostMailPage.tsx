@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { KeyboardEvent, useRef, useState } from "react";
 
 import { Editor } from "@tinymce/tinymce-react";
 import { useNavigate } from "react-router-dom";
@@ -78,6 +78,10 @@ const PostMailPage = () => {
     setLazy({ ...lazy, promptLoading: false });
   };
 
+  const headerPush = () => {
+    setPost((post) => ({ ...post, header: responseContent.header }));
+  };
+
   const contentPush = () => {
     if (editorRef.current) {
       const cur = editorRef.current.getContent();
@@ -107,12 +111,15 @@ const PostMailPage = () => {
         <styles.Header>
           <styles.HeaderLeft>
             <styles.HeaderTitle>
-              <span>제목</span>
-              <input onChange={(e) => setPost({ ...post, header: e.target.value })} />
+              <span>수신 메일</span>
+              <input onChange={(e) => setPost({ ...post, mail: e.target.value })} />
             </styles.HeaderTitle>
             <styles.HeaderTitle>
-              <span>이메일</span>
-              <input onChange={(e) => setPost({ ...post, mail: e.target.value })} />
+              <span>제목</span>
+              <input
+                value={post.header}
+                onChange={(e) => setPost({ ...post, header: e.target.value })}
+              />
             </styles.HeaderTitle>
           </styles.HeaderLeft>
           <styles.HeaderRight>
@@ -126,6 +133,7 @@ const PostMailPage = () => {
                   onClick={() => setPost({ ...post, platform: logo.name })}
                 />
               ))}
+              <span className="send">송신할 메일</span>
             </styles.togglesButton>
             <styles.PostButton onClick={postMail}>
               <img src={postIcon} />
@@ -163,6 +171,14 @@ const PostMailPage = () => {
             <div className="prompt_input">
               <input
                 type="text"
+                onKeyDown={(e: KeyboardEvent) => {
+                  if (e.key === "Enter" && !e.nativeEvent.isComposing) {
+                    if (!e.shiftKey) {
+                      e.preventDefault();
+                      postPrompt();
+                    }
+                  }
+                }}
                 onChange={(e) => setPromptContent(e.target.value)}
                 value={promptContent}
               />
@@ -184,19 +200,26 @@ const PostMailPage = () => {
               </div>
             )}
             {responseContent.header && (
-              <div>
-                <div className="header">{responseContent.header}</div>
-                <div
-                  className="content"
-                  dangerouslySetInnerHTML={{ __html: responseContent.body }}
-                ></div>
-                <button onClick={contentPush}>추가하기</button>
-              </div>
+              <>
+                <div className="response_content">
+                  <span>제목</span>
+                  <div className="header">{responseContent.header}</div>
+                  <span>내용</span>
+                  <div
+                    className="content"
+                    dangerouslySetInnerHTML={{ __html: responseContent.body }}
+                  ></div>
+                </div>
+
+                <div className="button_wrapper">
+                  <button onClick={headerPush}>제목 추가하기</button>
+                  <button onClick={contentPush}>내용 추가하기</button>
+                </div>
+              </>
             )}
           </styles.AIPrompt>
         </styles.Editor>
       </styles.innerContainer>
-      <styles.Content>{post.body}</styles.Content>
     </styles.Container>
   );
 };
