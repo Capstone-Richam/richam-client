@@ -39,6 +39,8 @@ const SideNavBar = () => {
   const Logout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
+    localStorage.removeItem("GOOGLE");
+    localStorage.removeItem("NAVER");
     navigate("/login");
   };
 
