@@ -26,7 +26,11 @@ const MainPage = () => {
 
   const getMailFunction = async () => {
     const data = await getMail();
-    localStorage.setItem("GOOGLE", data.GOOGLE);
+    if (data.GOOGLE.includes("@")) {
+      localStorage.setItem("GOOGLE", `${data.GOOGLE}`);
+    } else {
+      localStorage.setItem("GOOGLE", `${data.GOOGLE}@gmail.com`);
+    }
     if (data.NAVER.includes("@")) {
       localStorage.setItem("NAVER", `${data.NAVER}`);
     } else {
