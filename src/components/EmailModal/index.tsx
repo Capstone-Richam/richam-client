@@ -50,12 +50,12 @@ const EmailModal = ({
         document.body.style.overflowY = "auto";
       })
       .catch((err) => {
-        if (err.response.data.code === 409) {
+        if (err.response.data.status === 409) {
           setText("IMAP 설정을 진행해주세요.");
-        } else if (err.response.data.code === 410) {
+        } else if (err.response.data.status === 410) {
           setText("아이디와 패스워드를 다시 입력해주세요.");
         } else {
-          setText(`서버에러 입니다. 에러코드 : ${err.response.data.code}`);
+          setText(`${err.response.data.message}`);
         }
 
         setToast(true);
