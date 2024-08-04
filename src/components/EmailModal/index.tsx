@@ -109,7 +109,7 @@ const EmailModal = ({
             placeholder={
               email === "naver"
                 ? "네이버 이메일 비밀번호를 입력해주세요."
-                : "구글 이메일 비밀번호를 입력해주세요."
+                : "구글 이메일 앱 비밀번호를 입력해주세요."
             }
             onKeyDown={handleOnKeyPress}
           />
