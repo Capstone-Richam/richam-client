@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 import kakaoIcon from "@/assets/KakaoTalk.png";
 import editorIcon from "@/assets/edit.svg";
@@ -27,7 +27,7 @@ const SideNavBar = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [currentFilter, setCurrentFilter] = useRecoilState(MailFilterAtom);
-  const KakaoState = useRecoilState(kakaoState);
+  const KakaoState = useRecoilValue(kakaoState);
 
   useEffect(() => {
     if (pathname === "/keyword/mails") setCurrentFilter("KEYWORD");
