@@ -24,3 +24,8 @@ export const LoadingState = atom({
   key: "LoadingState",
   default: true,
 });
+
+export const kakaoState = atom({
+  key: "kakaoState",
+  default: false,
+});

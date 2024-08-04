@@ -10,6 +10,7 @@ import GoogleIcon from "@/assets/filter-google.svg";
 import KeywordIcon from "@/assets/filter-keyword.svg";
 import NaverIcon from "@/assets/filter-naver.svg";
 import logo from "@/assets/sidebar_logo.svg";
+import { kakaoState } from "@/recoil/atom";
 import { MailFilterAtom } from "@/recoil/atom/mail";
 import { MailFilterType } from "@/types";
 
@@ -26,6 +27,7 @@ const SideNavBar = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [currentFilter, setCurrentFilter] = useRecoilState(MailFilterAtom);
+  const KakaoState = useRecoilState(kakaoState);
 
   useEffect(() => {
     if (pathname === "/keyword/mails") setCurrentFilter("KEYWORD");
@@ -84,7 +86,7 @@ const SideNavBar = () => {
       </styles.PostBtn>
       <styles.KakaoBtn onClick={KakaoLogin}>
         <img src={kakaoIcon} />
-        카카오톡 알림 받기
+        {KakaoState ? "카카오톡 연동 완료" : "카카오톡 알림 받기"}
       </styles.KakaoBtn>
       <styles.logoutBtn onClick={Logout}>로그아웃</styles.logoutBtn>
     </styles.BarWrapper>
