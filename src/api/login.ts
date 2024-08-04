@@ -61,3 +61,8 @@ export const getDuplicate = async ({ aorn, content }: { aorn: string; content: s
   });
   return res;
 };
+
+export const getKakao = async (code: string) => {
+  const res = await RICHAM.get(`/kakao/send?code=${code}`);
+  return res;
+};

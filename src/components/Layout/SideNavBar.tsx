@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 
+import kakaoIcon from "@/assets/KakaoTalk.png";
 import editorIcon from "@/assets/edit.svg";
 import AllIcon from "@/assets/filter-all.svg";
 import GoogleIcon from "@/assets/filter-google.svg";
@@ -44,6 +45,12 @@ const SideNavBar = () => {
     navigate("/login");
   };
 
+  const KakaoLogin = () => {
+    const url = "https://kusitms28.shop/oauth/kakao";
+    // const url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=560b92df78c778c1482eeaff5d71c194&redirect_uri=http://localhost:5173/auth/kakao/callback&response_type=code&lang=ko`;
+    window.location.href = url;
+  };
+
   return (
     <styles.BarWrapper>
       <img
@@ -75,6 +82,10 @@ const SideNavBar = () => {
         <img src={editorIcon} />
         메일 보내기
       </styles.PostBtn>
+      <styles.KakaoBtn onClick={KakaoLogin}>
+        <img src={kakaoIcon} />
+        카카오톡 알림 받기
+      </styles.KakaoBtn>
       <styles.logoutBtn onClick={Logout}>로그아웃</styles.logoutBtn>
     </styles.BarWrapper>
   );

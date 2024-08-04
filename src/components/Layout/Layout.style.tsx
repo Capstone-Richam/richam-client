@@ -93,7 +93,7 @@ export const KeywordBtn = styled.button`
 
 export const PostBtn = styled.button`
   position: absolute;
-  bottom: 100px;
+  bottom: 160px;
   border: none;
   color: #fff;
   background-color: #282828;
@@ -107,6 +107,35 @@ export const PostBtn = styled.button`
   align-items: center;
   gap: 10px;
   cursor: pointer;
+`;
+
+export const KakaoBtn = styled.button`
+  img {
+    width: 25px;
+  }
+  position: absolute;
+  bottom: 100px;
+
+  border: none;
+  color: #fff;
+  background-color: #282828;
+  width: 90%;
+  height: 40px;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+`;
+
+export const KakaoText = styled.span`
+  position: absolute;
+  bottom: 230px;
+  color: #fff;
+  text-align: center;
 `;
 
 export const logoutBtn = styled.button`

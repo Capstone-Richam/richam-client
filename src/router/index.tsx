@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import { KakaoCallback } from "@/pages/KakaoCallback";
 import KeywordFilteredMailPage from "@/pages/KeywordFilteredMailPage";
 import KeywordRegisterPage from "@/pages/KeywordRegisterPage";
 import LoginPage from "@/pages/LoginPage";
@@ -39,6 +40,11 @@ const routes = [
     path: "/login",
     element: <LoginPage />,
   },
+  {
+    path: "/auth/kakao/callback",
+    element: <KakaoCallback />,
+  },
+
   { path: "/register", element: <RegisterPage /> },
 ];
 
